@@ -116,7 +116,7 @@ func Convert(text string) string {
 					if pTagOpen == false {
 						line = "<p>" + line
 						pTagOpen = true
-						
+
 					} else {
 						line = " " + line
 					}
