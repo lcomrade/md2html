@@ -5,12 +5,12 @@
 
 **md2html** is a golang library for converting Markdown to HTML.
 
-## Installation
+## Install
 ```
 go get github.com/wallblog/md2html
 ```
 
-## Using
+## Example
 ```go
 package main
 
@@ -47,3 +47,7 @@ func main() {
 	println(result)
 }
 ```
+
+## Documentation
+- Local docs: `go doc -all github.com/wallblog/md2html`
+- [Web site with docs](https://pkg.go.dev/github.com/wallblog/md2html)
