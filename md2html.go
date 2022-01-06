@@ -26,18 +26,33 @@ const lineSeparator = "\n"
 
 // Convert Markdown to HTML.
 //
-// Supports following Markdown elements:
-// - Headers (# - ######)
-// - Italic text (*Text* or _Text_)
-// - Bold text (**Text** or __Text__)
-// - Strikethrough text (~~Text~~)
-// - Code quote (`Code line`)
-// - Code block (```Many lines of code```)
+// Text style ('*' may be replaced by '_'):
+//   *Italic text*
+//   **Bold text**
+//   ***Bold and italic text***
+//   ~~Strikethrough text~~
+//
+// Code:
+//   `Code quote`
+//
+//   ```
+//   go doc
+//   go tool dist list
+//   go help build
+//   ```
+//
+// Numbered list:
+//   1. level 1
+//   2. level 1
+//       1. level 2
+//       2. level 2
+//   ^^^^
+//   (4 spaces)
 func Convert(text string) string {
 	var result string = ""
 
 	// Split text into lines
-	lines := strings.Split(text, "\n")
+	lines := strings.Split(text, lineSeparator)
 
 	// Track opened HTML tags
 	var pTagOpen bool = false
