@@ -50,6 +50,14 @@ go help build
 (4 spaces)
 ```
 
+## Character shielding
+| Input | Output |
+| ----- | ------ |
+| `\*`  | `*`    |
+| `\_`  | `_`    |
+| `\~`  | `~`    |
+| `\.`  | `.`    |
+
 
 ## Paragraphs
 A blank line is used to separate paragraphs.

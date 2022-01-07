@@ -83,6 +83,26 @@ func mdStyle(line string) string {
 		} else if lastChar == `\` && char == "_" {
 			result = result + "_"
 
+			// Replace \~ to ~
+		} else if lastChar == `\` && char == "~" {
+			result = result + "~"
+
+			// Replace \~ to ~
+		} else if char == `\` && nextChar == "~" {
+			//pass
+
+			// Replace \~ to ~
+		} else if lastChar == `\` && char == "~" {
+			result = result + "~"
+
+			// Replace \. to .
+		} else if char == `\` && nextChar == "." {
+			//pass
+
+			// Replace \. to .
+		} else if lastChar == `\` && char == "." {
+			result = result + "."
+
 			// ^ - space
 			// Bold and italic text
 		} else if char == "*" || char == "_" {
