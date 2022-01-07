@@ -26,11 +26,23 @@ const lineSeparator = "\n"
 
 // Convert Markdown to HTML.
 //
+// Headers:
+//   # This is a H1 header
+//   ## This is a H2 header
+//   ### This is a H3 header
+//   #### This is a H4 header
+//   ##### This is a H5 header
+//   ###### This is a H6 header
+//
 // Text style ('*' may be replaced by '_'):
 //   *Italic text*
 //   **Bold text**
 //   ***Bold and italic text***
 //   ~~Strikethrough text~~
+//
+// Link and image:
+//   [Example link](https://example.org)
+//   ![Alt text](https://example.org/image.png)
 //
 // Code:
 //   `Code quote`
