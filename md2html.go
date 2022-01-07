@@ -91,6 +91,12 @@ func Convert(text string) string {
 
 			// End paragraph: </p> and </ol>
 		} else if line == "" {
+			// Close <ul>, <ol> and <p> tags
+			for ulTagOpen != 0 {
+				result = result + "</ul>"
+				ulTagOpen = ulTagOpen - 1
+			}
+
 			for olTagOpen != 0 {
 				result = result + "</ol>"
 				olTagOpen = olTagOpen - 1
@@ -130,6 +136,11 @@ func Convert(text string) string {
 				line = mdStyle(resultUList)
 				line = "<li>" + mdLink(line) + "</li>"
 
+				for olTagOpen != 0 {
+					result = result + "</ol>"
+					olTagOpen = olTagOpen - 1
+				}
+
 				for ulTagOpen < levelUList {
 					line = "<ul>" + line
 					ulTagOpen = ulTagOpen + 1
@@ -145,6 +156,11 @@ func Convert(text string) string {
 				line = mdStyle(resultOList)
 				line = "<li>" + mdLink(line) + "</li>"
 
+				for ulTagOpen != 0 {
+					result = result + "</ul>"
+					ulTagOpen = ulTagOpen - 1
+				}
+
 				for olTagOpen < levelOList {
 					line = "<ol>" + line
 					olTagOpen = olTagOpen + 1
@@ -156,6 +172,17 @@ func Convert(text string) string {
 				}
 
 			} else {
+				// Close <ul> and <ol> tags
+				for ulTagOpen != 0 {
+					result = result + "</ul>"
+					ulTagOpen = ulTagOpen - 1
+				}
+
+				for olTagOpen != 0 {
+					result = result + "</ol>"
+					olTagOpen = olTagOpen - 1
+				}
+
 				// Text format: <em>, <strong> and <code>
 				line = mdStyle(line)
 
