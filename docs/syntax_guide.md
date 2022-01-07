@@ -49,3 +49,12 @@ go help build
 ^^^^
 (4 spaces)
 ```
+
+
+## Paragraphs
+A blank line is used to separate paragraphs.
+
+
+## Embedded HTML
+If the HTML is not in a code block, it will not be escaped.
+That mean, you can use HTML tags inside a Markdown document.

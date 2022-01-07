@@ -39,13 +39,6 @@ func main() {
 	result := md2html.Convert(myMarkdown)
 	println(result)
 }
-`
-
-func main() {
-	result := md2html.Convert(myMarkdown)
-
-	println(result)
-}
 ```
 
 ## Documentation
