@@ -53,6 +53,14 @@ const lineSeparator = "\n"
 //   go help build
 //   ```
 //
+// Unordered list ('-' may be replaced by '+' or '*'):
+//   - level 1
+//   - level 1
+//       - level 2
+//       - level 2
+//   ^^^^
+//   (4 spaces)
+//
 // Numbered list:
 //   1. level 1
 //   2. level 1
@@ -69,6 +77,7 @@ func Convert(text string) string {
 	// Track opened HTML tags
 	var pTagOpen bool = false
 	var codeTagOpen bool = false
+	var ulTagOpen int = 0
 	var olTagOpen int = 0
 	var isHeader bool = false
 
@@ -112,18 +121,36 @@ func Convert(text string) string {
 
 			// Other text
 		} else {
-			// List: <ol>
-			isOList, level, resultOList := mdOList(line)
-			if isOList == true {
+			// List
+			isUList, levelUList, resultUList := mdUList(line)
+			isOList, levelOList, resultOList := mdOList(line)
+
+			// List: <ul>
+			if isUList == true {
+				line = mdStyle(resultUList)
+				line = "<li>" + mdLink(line) + "</li>"
+
+				for ulTagOpen < levelUList {
+					line = "<ul>" + line
+					ulTagOpen = ulTagOpen + 1
+				}
+
+				for ulTagOpen > levelUList {
+					line = "</ul>" + line
+					ulTagOpen = ulTagOpen - 1
+				}
+
+				// List: <ol>
+			} else if isOList == true {
 				line = mdStyle(resultOList)
 				line = "<li>" + mdLink(line) + "</li>"
 
-				for olTagOpen < level {
+				for olTagOpen < levelOList {
 					line = "<ol>" + line
 					olTagOpen = olTagOpen + 1
 				}
 
-				for olTagOpen > level {
+				for olTagOpen > levelOList {
 					line = "</ol>" + line
 					olTagOpen = olTagOpen - 1
 				}
@@ -163,6 +190,11 @@ func Convert(text string) string {
 	}
 
 	// Closing not closed HTML tags
+	for ulTagOpen != 0 {
+		result = result + "</ul>"
+		ulTagOpen = ulTagOpen - 1
+	}
+
 	for olTagOpen != 0 {
 		result = result + "</ol>"
 		olTagOpen = olTagOpen - 1

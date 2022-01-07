@@ -40,6 +40,19 @@ go help build
 ````
 
 
+## Unordered list
+NOTE: `-` may be replaced by `+` or `*`
+
+```markdown
+- level 1
+- level 1
+    - level 2
+    - level 2
+^^^^
+(4 spaces)
+```
+
+
 ## Numbered list
 ```markdown
 1. level 1
