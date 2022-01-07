@@ -42,6 +42,7 @@ func main() {
 ```
 
 ## Documentation
-- Local docs: `go doc -all github.com/wallblog/md2html`
-- [Web site with docs](https://pkg.go.dev/github.com/wallblog/md2html#section-documentation)
+- Offline documentation: `go doc -all github.com/wallblog/md2html`
+- [Online documentation](https://pkg.go.dev/github.com/wallblog/md2html#section-documentation)
 - [Markdown Syntax Guide](docs/syntax_guide.md)
+- [Changelog](CHANGELOG.md)
