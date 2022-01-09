@@ -77,10 +77,10 @@ func mdLink(line string) string {
 			// Round brackets end: ....)^
 		} else if char == ")" && nextChar == " " && nowRead == "arg2" {
 			if contType == "link" {
-				result = result + "<a href= '" + arg2 + "'>" + arg1 + "</a>"
+				result = result + "<a href='" + arg2 + "'>" + arg1 + "</a>"
 
 			} else {
-				result = result + "<img src= '" + arg2 + "' alt='" + arg1 + "'>"
+				result = result + "<img src='" + arg2 + "' alt='" + arg1 + "'>"
 			}
 
 			nowRead = "normal"
