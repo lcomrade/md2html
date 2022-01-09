@@ -1,6 +1,10 @@
 # Changelog
 Semantic versioning is used (https://semver.org/).
 
+## v1.0.1
+Solved the problem with the display of characters of alphabets other than English.
+For example, now displays Cyrillic correctly.
+
 ## v1.0.0
 First stable release.
 
