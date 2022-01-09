@@ -27,7 +27,8 @@ package md2html
 func mdStyle(line string) string {
 	var result string = ""
 
-	lineLen := len(line)
+	lineRune := []rune(line)
+	lineLen := len(lineRune)
 
 	// Track opened HTML tags
 	var emTagOpen bool = false
@@ -36,31 +37,31 @@ func mdStyle(line string) string {
 	var codeTagOpen bool = false
 
 	// Reading line by character
-	for i := range line {
+	for i := range lineRune {
 		lastChar := " "
-		char := string(line[i])
+		char := string(lineRune[i])
 		nextChar := " "
 		nextNextChar := " "
 		nextNextNextChar := " "
 
 		// Get last char
 		if i != 0 {
-			lastChar = string(line[i-1])
+			lastChar = string(lineRune[i-1])
 		}
 
 		// Get next char
 		if lineLen > i+1 {
-			nextChar = string(line[i+1])
+			nextChar = string(lineRune[i+1])
 		}
 
 		// Get next next char
 		if lineLen > i+2 {
-			nextNextChar = string(line[i+2])
+			nextNextChar = string(lineRune[i+2])
 		}
 
 		// Get next next char
 		if lineLen > i+3 {
-			nextNextNextChar = string(line[i+3])
+			nextNextNextChar = string(lineRune[i+3])
 		}
 
 		// Shielding characters inside <code>....</code>

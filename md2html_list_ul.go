@@ -22,18 +22,19 @@ func mdUList(line string) (bool, int, string) {
 	var isList bool = false
 	var result string = ""
 
-	lineLen := len(line)
+	lineRune := []rune(line)
+	lineLen := len(lineRune)
 
 	var spaceNum int = 0
 	var step string = "space" // space, skip, content
 
-	for i := range line {
-		char := string(line[i])
+	for i := range lineRune {
+		char := string(lineRune[i])
 		nextChar := " "
 
 		// Get next char
 		if lineLen > i+1 {
-			nextChar = string(line[i+1])
+			nextChar = string(lineRune[i+1])
 		}
 
 		// 'space' step: spaces at start of line

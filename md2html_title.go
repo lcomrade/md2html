@@ -25,33 +25,35 @@ import (
 // Replace # - ###### to <h1> - <h6>
 // Return formated string and 'sHeader'bool var
 func mdTitle(line string) (string, bool) {
+	lineRune := []rune(line)
+
 	if strings.HasPrefix(line, "# ") {
-		title := line[2:]
+		title := string(lineRune[2:])
 		return "<h1 id='" + toHTMLID(title) + "'>" + title + "</h1>", true
 	}
 
 	if strings.HasPrefix(line, "## ") {
-		title := line[3:]
+		title := string(lineRune[3:])
 		return "<h2 id='" + toHTMLID(title) + "'>" + title + "</h2>", true
 	}
 
 	if strings.HasPrefix(line, "### ") {
-		title := line[4:]
+		title := string(lineRune[4:])
 		return "<h3 id='" + toHTMLID(title) + "'>" + title + "</h3>", true
 	}
 
 	if strings.HasPrefix(line, "#### ") {
-		title := line[5:]
+		title := string(lineRune[5:])
 		return "<h4 id='" + toHTMLID(title) + "'>" + title + "</h4>", true
 	}
 
 	if strings.HasPrefix(line, "##### ") {
-		title := line[6:]
+		title := string(lineRune[6:])
 		return "<h5 id='" + toHTMLID(title) + "'>" + title + "</h5>", true
 	}
 
 	if strings.HasPrefix(line, "###### ") {
-		title := line[7:]
+		title := string(lineRune[7:])
 		return "<h6 id='" + toHTMLID(title) + "'>" + title + "</h6>", true
 	}
 

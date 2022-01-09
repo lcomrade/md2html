@@ -23,32 +23,33 @@ package md2html
 func mdLink(line string) string {
 	var result string = ""
 
-	lineLen := len(line)
+	lineRune := []rune(line)
+	lineLen := len(lineRune)
 
 	var nowRead string = "normal" // normal, arg1 or arg2
 	var contType string = ""      // content type (link or image)
 	var arg1 string = ""          // square brackets
 	var arg2 string = ""          // round brackets
 
-	for i := range line {
+	for i := range lineRune {
 		lastLastChar := " "
 		lastChar := " "
-		char := string(line[i])
+		char := string(lineRune[i])
 		nextChar := " "
 
 		// Get last last char
 		if i > 1 {
-			lastChar = string(line[i-2])
+			lastChar = string(lineRune[i-2])
 		}
 
 		// Get last char
 		if i != 0 {
-			lastChar = string(line[i-1])
+			lastChar = string(lineRune[i-1])
 		}
 
 		// Get next char
 		if lineLen > i+1 {
-			nextChar = string(line[i+1])
+			nextChar = string(lineRune[i+1])
 		}
 
 		// Link start: ^[....

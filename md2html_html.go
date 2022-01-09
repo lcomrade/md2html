@@ -40,8 +40,10 @@ func shieldHTMLChar(char string) string {
 func shieldHTML(text string) string {
 	var result string = ""
 
-	for i := range text {
-		char := string(text[i])
+	textRune := []rune(text)
+
+	for i := range textRune {
+		char := string(textRune[i])
 
 		result = result + shieldHTMLChar(char)
 	}
@@ -53,8 +55,10 @@ func shieldHTML(text string) string {
 func toHTMLID(line string) string {
 	var result string = ""
 
-	for i := range line {
-		char := string(line[i])
+	lineRune := []rune(line)
+
+	for i := range lineRune {
+		char := string(lineRune[i])
 
 		if char == " " {
 			result = result + "-"

@@ -24,8 +24,10 @@ func isOneCharLine(line string, char string) bool {
 		return false
 	}
 
-	for i := range line {
-		if string(line[i]) != char {
+	lineRune := []rune(line)
+
+	for i := range lineRune {
+		if string(lineRune[i]) != char {
 			return false
 		}
 	}
