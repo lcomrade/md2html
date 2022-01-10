@@ -1,6 +1,9 @@
 # Changelog
 Semantic versioning is used (https://semver.org/).
 
+## v1.1.2
+Fix: `mailto:'admin@example.org'` replaced to `mailto:admin@example.org`
+
 ## v1.1.1
 Fix: autolink email display.
 
