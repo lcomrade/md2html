@@ -39,7 +39,7 @@ func mdLink(line string) string {
 
 		// Get last last char
 		if i > 1 {
-			lastChar = string(lineRune[i-2])
+			lastLastChar = string(lineRune[i-2])
 		}
 
 		// Get last char
