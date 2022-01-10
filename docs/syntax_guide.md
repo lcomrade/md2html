@@ -26,6 +26,15 @@
 ```
 
 
+## Autolink
+Will be preformed into links:
+- Emails
+- `http://*`
+- `https://*`
+- `ftp://*`
+- `irc://*`
+
+
 ## Code
 ```markdown
 `Code quote`
