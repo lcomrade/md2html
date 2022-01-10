@@ -177,6 +177,7 @@ func Convert(text string) string {
 
 				// Links and images: <a> and <img>
 				line = mdLink(line)
+				line = mdAutolink(line)
 
 				// Header format: <h1> - <h6>
 				line, isHeader = mdTitle(line)
