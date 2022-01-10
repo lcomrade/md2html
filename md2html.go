@@ -44,6 +44,13 @@ const lineSeparator = "\n"
 //   [Example link](https://example.org)
 //   ![Alt text](https://example.org/image.png)
 //
+// Autolink:
+//   admin@example.org
+//   http://example.org
+//   https://example.org
+//   ftp://ftp.mozilla.org
+//   irc://irc.debian.org/debian
+//
 // Code:
 //   `Code quote`
 //

@@ -22,7 +22,9 @@ import (
 	"strings"
 )
 
-// Convert http:// and https:// to links
+// Convert http://*, https://*,
+// ftp://*, irc://*
+// and email to links
 func mdAutolink(line string) string {
 	var result string = ""
 
@@ -40,6 +42,18 @@ func mdAutolink(line string) string {
 			// https://*
 		} else if bufferLen > 8 && strings.HasPrefix(buffer, "https://") {
 			buffer = "<a href='" + buffer + "'>" + buffer + "</a>"
+
+			// ftp://*
+		} else if bufferLen > 6 && strings.HasPrefix(buffer, "ftp://") {
+			buffer = "<a href='" + buffer + "'>" + buffer + "</a>"
+
+			// irc://*
+		} else if bufferLen > 6 && strings.HasPrefix(buffer, "irc://") {
+			buffer = "<a href='" + buffer + "'>" + buffer + "</a>"
+
+			// Email
+		} else if isEmail(line) {
+			buffer = "<a href=mailto:'" + buffer + "'>" + buffer + "</a>"
 		}
 
 		result = result + buffer
@@ -50,4 +64,35 @@ func mdAutolink(line string) string {
 	}
 
 	return result
+}
+
+// Checks if the string is an email address
+func isEmail(line string) bool {
+	lineRune := []rune(line)
+
+	var signChar bool = false // '@' char
+
+	for i := range lineRune {
+		char := string(lineRune[i])
+
+		if char == "@" {
+			// '@' repeated two
+			if signChar == true {
+				return false
+			}
+
+			// '@' is at beginning of line
+			if i == 0 {
+				return false
+			}
+
+			signChar = true
+		}
+	}
+
+	if signChar == true {
+		return true
+	}
+
+	return false
 }
