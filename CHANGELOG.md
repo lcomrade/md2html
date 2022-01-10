@@ -1,6 +1,9 @@
 # Changelog
 Semantic versioning is used (https://semver.org/).
 
+## v1.1.1
+Fix: autolink email display.
+
 ## v1.1.0
 Now automatically converted into links:
 - Emails

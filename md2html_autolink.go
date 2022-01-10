@@ -52,7 +52,7 @@ func mdAutolink(line string) string {
 			buffer = "<a href='" + buffer + "'>" + buffer + "</a>"
 
 			// Email
-		} else if isEmail(line) {
+		} else if isEmail(buffer) {
 			buffer = "<a href=mailto:'" + buffer + "'>" + buffer + "</a>"
 		}
 
