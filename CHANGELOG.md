@@ -1,6 +1,9 @@
 # Changelog
 Semantic versioning is used (https://semver.org/).
 
+## v1.0.3
+The end of the list is now indicated by an empty line.
+
 ## v1.0.2
 Fix: `_` and `*` inside words are now handled correctly.
 
