@@ -1,13 +1,13 @@
-[![Go report](https://goreportcard.com/badge/github.com/wallblog/md2html)](https://goreportcard.com/report/github.com/wallblog/md2html)
-[![Go Reference](https://pkg.go.dev/badge/github.com/wallblog/md2html.svg)](https://pkg.go.dev/github.com/wallblog/md2html#section-documentation)
-[![Release](https://img.shields.io/github/v/release/wallblog/md2html)](https://github.com/wallblog/md2html/releases/latest)
-[![License](https://img.shields.io/github/license/wallblog/md2html)](LICENSE)
+[![Go report](https://goreportcard.com/badge/github.com/lcomrade/md2html)](https://goreportcard.com/report/github.com/lcomrade/md2html)
+[![Go Reference](https://pkg.go.dev/badge/github.com/lcomrade/md2html.svg)](https://pkg.go.dev/github.com/lcomrade/md2html#section-documentation)
+[![Release](https://img.shields.io/github/v/release/lcomrade/md2html)](https://github.com/lcomrade/md2html/releases/latest)
+[![License](https://img.shields.io/github/license/lcomrade/md2html)](LICENSE)
 
 **md2html** is a golang library for converting Markdown to HTML.
 
 ## Install
 ```
-go get github.com/wallblog/md2html
+go get github.com/lcomrade/md2html
 ```
 
 ## Example
@@ -15,7 +15,7 @@ go get github.com/wallblog/md2html
 package main
 
 import(
-	"github.com/wallblog/md2html"
+	"github.com/lcomrade/md2html"
 )
 
 const myMarkdown = `
@@ -42,7 +42,7 @@ func main() {
 ```
 
 ## Documentation
-- Offline documentation: `go doc -all github.com/wallblog/md2html`
-- [Online documentation](https://pkg.go.dev/github.com/wallblog/md2html#section-documentation)
+- Offline documentation: `go doc -all github.com/lcomrade/md2html`
+- [Online documentation](https://pkg.go.dev/github.com/lcomrade/md2html#section-documentation)
 - [Markdown Syntax Guide](docs/syntax_guide.md)
 - [Changelog](CHANGELOG.md)

@@ -1,3 +1,3 @@
-module github.com/wallblog/md2html
+module github.com/lcomrade/md2html
 
 go 1.11
