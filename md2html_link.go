@@ -36,6 +36,7 @@ func mdLink(line string) string {
 		lastChar := " "
 		char := string(lineRune[i])
 		nextChar := " "
+		nextNextChar := " "
 
 		// Get last last char
 		if i > 1 {
@@ -50,6 +51,11 @@ func mdLink(line string) string {
 		// Get next char
 		if lineLen > i+1 {
 			nextChar = string(lineRune[i+1])
+		}
+
+		// Get next next char
+		if lineLen > i+2 {
+			nextNextChar = string(lineRune[i+2])
 		}
 
 		// Link start: ^[....
@@ -74,13 +80,20 @@ func mdLink(line string) string {
 		} else if lastChar == "]" && char == "(" {
 			//pass
 
-			// Round brackets end: ....)
+			// Round brackets end: ....)^ or ....).^
 		} else if char == ")" && nowRead == "arg2" {
-			if contType == "link" {
-				result = result + "<a href='" + arg2 + "'>" + arg1 + "</a>"
+			// ....)^ or ....).^
+			if nextChar == " " || nextNextChar == " " {
+				if contType == "link" {
+					result = result + "<a href='" + arg2 + "'>" + arg1 + "</a>"
 
+				} else {
+					result = result + "<img src='" + arg2 + "' alt='" + arg1 + "'>"
+				}
+
+				// ....)aa
 			} else {
-				result = result + "<img src='" + arg2 + "' alt='" + arg1 + "'>"
+				arg2 = arg2 + char
 			}
 
 			nowRead = "normal"
