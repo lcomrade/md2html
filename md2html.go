@@ -141,7 +141,9 @@ func Convert(text string) string {
 			// List: <ul>
 			if isUList == true {
 				line = mdStyle(resultUList)
-				line = "<li>" + mdLink(line) + "</li>"
+				line = mdLink(line)
+				line = mdAutolink(line)
+				line = "<li>" + line + "</li>"
 
 				for olTagOpen != 0 {
 					result = result + "</ol>"
@@ -161,7 +163,9 @@ func Convert(text string) string {
 				// List: <ol>
 			} else if isOList == true {
 				line = mdStyle(resultOList)
-				line = "<li>" + mdLink(line) + "</li>"
+				line = mdLink(line)
+				line = mdAutolink(line)
+				line = "<li>" + line + "</li>"
 
 				for ulTagOpen != 0 {
 					result = result + "</ul>"
