@@ -57,6 +57,7 @@ func toHTMLID(line string) string {
 
 	lineRune := []rune(line)
 
+	var lastChar string = " "
 	var tagOpen bool = true
 
 	for i := range lineRune {
@@ -72,9 +73,11 @@ func toHTMLID(line string) string {
 		} else if tagOpen == true {
 			//pass
 
-		// Special chars
+			// Special chars
 		} else if char == " " {
-			result = result + "-"
+			if lastChar != " " {
+				result = result + "_"
+			}
 
 		} else if char == "#" {
 			//pass
@@ -88,10 +91,33 @@ func toHTMLID(line string) string {
 		} else if char == `\` {
 			//pass
 
-		// Else: save char
+		} else if char == "|" {
+			//pass
+
+		} else if char == ":" {
+			//pass
+
+		} else if char == ";" {
+			//pass
+
+		} else if char == `"` {
+			//pass
+
+		} else if char == "'" {
+			//pass
+
+		} else if char == "`" {
+			//pass
+
+		} else if char == "~" {
+			//pass
+
+			// Else: save char
 		} else {
 			result = result + char
 		}
+
+		lastChar = char
 	}
 
 	return strings.ToLower(result)
