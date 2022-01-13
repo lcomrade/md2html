@@ -1,6 +1,12 @@
 # Changelog
 Semantic versioning is used (https://semver.org/).
 
+## v1.2.0
+- Autolink now work in lists
+- Autolink now work in headers
+- Update link parser
+- Update HTML headers IDs
+
 ## v1.1.2
 Fix: `mailto:'admin@example.org'` replaced to `mailto:admin@example.org`
 
