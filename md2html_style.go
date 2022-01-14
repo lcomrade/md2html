@@ -107,8 +107,12 @@ func mdStyle(line string) string {
 			// ^ - space
 			// Bold and italic text
 		} else if char == "*" || char == "_" {
-			// a*a
-			if lastChar != char && nextChar != char {
+			// ^*^
+			if lastChar == " " && nextChar == " " {
+				result = result + char
+
+				// a*a
+			} else if lastChar != char && nextChar != char && lastChar != " " && nextChar != " " {
 				result = result + char
 
 				// ^***WORD....
