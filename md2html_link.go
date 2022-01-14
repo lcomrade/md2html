@@ -95,15 +95,15 @@ func mdLink(line string) string {
 					result = result + "<img src='" + arg2 + "' alt='" + arg1 + "'>"
 				}
 
+				nowRead = "normal"
+				contType = ""
+				arg1 = ""
+				arg2 = ""
+
 				// ....)aa
 			} else {
 				arg2 = arg2 + char
 			}
-
-			nowRead = "normal"
-			contType = ""
-			arg1 = ""
-			arg2 = ""
 
 			// Normal character
 		} else {
