@@ -30,6 +30,7 @@ func readFile(path string) (string, error) {
 	if err != nil {
 		return "", err
 	}
+	defer file.Close()
 
 	// Read file
 	fileByte, err := ioutil.ReadAll(file)
