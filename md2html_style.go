@@ -18,6 +18,10 @@
 
 package md2html
 
+import (
+	"unicode"
+)
+
 // Replace * to <em>
 // Replace ** to <strong>
 // Replace *** to <strong> + <em>
@@ -38,30 +42,38 @@ func mdStyle(line string) string {
 
 	// Reading line by character
 	for i := range lineRune {
+		lastCharRune := ' '
 		lastChar := " "
 		char := string(lineRune[i])
+		nextCharRune := ' '
 		nextChar := " "
+		nextNextCharRune := ' '
 		nextNextChar := " "
+		nextNextNextCharRune := ' '
 		nextNextNextChar := " "
 
 		// Get last char
 		if i != 0 {
-			lastChar = string(lineRune[i-1])
+			lastCharRune = lineRune[i-1]
+			lastChar = string(lastCharRune)
 		}
 
 		// Get next char
 		if lineLen > i+1 {
-			nextChar = string(lineRune[i+1])
+			nextCharRune = lineRune[i+1]
+			nextChar = string(nextCharRune)
 		}
 
 		// Get next next char
 		if lineLen > i+2 {
-			nextNextChar = string(lineRune[i+2])
+			nextCharRune = lineRune[i+2]
+			nextNextChar = string(nextCharRune)
 		}
 
 		// Get next next char
 		if lineLen > i+3 {
-			nextNextNextChar = string(lineRune[i+3])
+			nextNextNextCharRune = lineRune[i+3]
+			nextNextNextChar = string(nextNextNextCharRune)
 		}
 
 		// Shielding characters inside <code>....</code>
@@ -112,11 +124,11 @@ func mdStyle(line string) string {
 				result = result + char
 
 				// a*a
-			} else if lastChar != char && nextChar != char && lastChar != " " && nextChar != " " {
+			} else if unicode.IsLetter(lastCharRune) && unicode.IsLetter(nextCharRune) {
 				result = result + char
 
 				// ^***WORD....
-			} else if lastChar == " " && nextChar == char && nextNextChar == char && nextNextNextChar != char {
+			} else if unicode.IsLetter(lastCharRune) == false && nextChar == char && nextNextChar == char && nextNextNextChar != char {
 				if strongTagOpen == false {
 					result = result + "<strong>"
 					strongTagOpen = true
@@ -128,7 +140,7 @@ func mdStyle(line string) string {
 				}
 
 				// ....WORD***^
-			} else if lastChar != char && nextChar == char && nextNextChar == char && nextNextNextChar == " " {
+			} else if lastChar != char && nextChar == char && nextNextChar == char && unicode.IsLetter(nextNextNextCharRune) == false {
 				if emTagOpen == true {
 					result = result + "</em>"
 					emTagOpen = false
@@ -140,28 +152,28 @@ func mdStyle(line string) string {
 				}
 
 				// ^**WORD....
-			} else if lastChar == " " && nextChar == char && nextNextChar != char {
+			} else if unicode.IsLetter(lastCharRune) == false && nextChar == char && nextNextChar != char {
 				if strongTagOpen == false {
 					result = result + "<strong>"
 					strongTagOpen = true
 				}
 
 				// ....WORD**^
-			} else if lastChar != char && nextChar == char && nextNextChar == " " {
+			} else if lastChar != char && nextChar == char && unicode.IsLetter(nextNextCharRune) == false {
 				if strongTagOpen == true {
 					result = result + "</strong>"
 					strongTagOpen = false
 				}
 
 				// ^*WORD....
-			} else if lastChar == " " && nextChar != char {
+			} else if unicode.IsLetter(lastCharRune) == false && nextChar != char {
 				if emTagOpen == false {
 					result = result + "<em>"
 					emTagOpen = true
 				}
 
 				// ....WORD*^
-			} else if lastChar != char && nextChar == " " {
+			} else if lastChar != char && unicode.IsLetter(nextCharRune) == false {
 				if emTagOpen == true {
 					result = result + "</em>"
 					emTagOpen = false
@@ -175,15 +187,19 @@ func mdStyle(line string) string {
 			if lastChar == " " && nextChar == " " {
 				result = result + "~"
 
+				// a~a
+			} else if unicode.IsLetter(lastCharRune) && unicode.IsLetter(nextCharRune) {
+				result = result + "~"
+
 				// ^~~WORD....
-			} else if lastChar == " " && nextChar == "~" && nextNextChar != "~" {
+			} else if unicode.IsLetter(lastCharRune) == false && nextChar == "~" && nextNextChar != "~" {
 				if delTagOpen == false {
 					result = result + "<del>"
 					delTagOpen = true
 				}
 
 				// ....WORD~~^
-			} else if lastChar != "~" && nextChar == "~" && nextNextChar == " " {
+			} else if lastChar != "~" && nextChar == "~" && unicode.IsLetter(nextNextCharRune) == false {
 				if delTagOpen == true {
 					result = result + "</del>"
 					delTagOpen = false
@@ -195,6 +211,10 @@ func mdStyle(line string) string {
 		} else if char == "`" {
 			// WORD`WORD
 			if lastChar != " " && nextChar != " " {
+				result = result + "`"
+
+				// a`a
+			} else if unicode.IsLetter(lastCharRune) && unicode.IsLetter(nextCharRune) {
 				result = result + "`"
 
 				// ^`.... or ....`^
