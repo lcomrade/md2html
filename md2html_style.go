@@ -40,8 +40,16 @@ func mdStyle(line string) string {
 	var delTagOpen bool = false
 	var codeTagOpen bool = false
 
+	var skip int = 0
+
 	// Reading line by character
 	for i := range lineRune {
+		// Skip
+		if skip != 0 {
+			skip = skip - 1
+			continue
+		}
+
 		lastCharRune := ' '
 		lastChar := " "
 		char := string(lineRune[i])
@@ -66,8 +74,8 @@ func mdStyle(line string) string {
 
 		// Get next next char
 		if lineLen > i+2 {
-			nextCharRune = lineRune[i+2]
-			nextNextChar = string(nextCharRune)
+			nextNextCharRune = lineRune[i+2]
+			nextNextChar = string(nextNextCharRune)
 		}
 
 		// Get next next char
@@ -82,39 +90,23 @@ func mdStyle(line string) string {
 
 			// Replace \* to *
 		} else if char == `\` && nextChar == "*" {
-			//pass
-
-			// Replace \* to *
-		} else if lastChar == `\` && char == "*" {
 			result = result + "*"
+			skip = 1
 
 			// Replace \_ to _
 		} else if char == `\` && nextChar == "_" {
-			//pass
-
-			// Replace \_ to _
-		} else if lastChar == `\` && char == "_" {
 			result = result + "_"
-
-			// Replace \~ to ~
-		} else if lastChar == `\` && char == "~" {
-			result = result + "~"
+			skip = 1
 
 			// Replace \~ to ~
 		} else if char == `\` && nextChar == "~" {
-			//pass
-
-			// Replace \~ to ~
-		} else if lastChar == `\` && char == "~" {
 			result = result + "~"
+			skip = 1
 
 			// Replace \. to .
 		} else if char == `\` && nextChar == "." {
-			//pass
-
-			// Replace \. to .
-		} else if lastChar == `\` && char == "." {
 			result = result + "."
+			skip = 1
 
 			// ^ - space
 			// Bold and italic text
@@ -139,6 +131,8 @@ func mdStyle(line string) string {
 					emTagOpen = true
 				}
 
+				skip = 2
+
 				// ....WORD***^
 			} else if lastChar != char && nextChar == char && nextNextChar == char && unicode.IsLetter(nextNextNextCharRune) == false {
 				if emTagOpen == true {
@@ -151,6 +145,8 @@ func mdStyle(line string) string {
 					strongTagOpen = false
 				}
 
+				skip = 2
+
 				// ^**WORD....
 			} else if unicode.IsLetter(lastCharRune) == false && nextChar == char && nextNextChar != char {
 				if strongTagOpen == false {
@@ -158,12 +154,16 @@ func mdStyle(line string) string {
 					strongTagOpen = true
 				}
 
+				skip = 1
+
 				// ....WORD**^
 			} else if lastChar != char && nextChar == char && unicode.IsLetter(nextNextCharRune) == false {
 				if strongTagOpen == true {
 					result = result + "</strong>"
 					strongTagOpen = false
 				}
+
+				skip = 1
 
 				// ^*WORD....
 			} else if unicode.IsLetter(lastCharRune) == false && nextChar != char {
@@ -191,30 +191,28 @@ func mdStyle(line string) string {
 			} else if unicode.IsLetter(lastCharRune) && unicode.IsLetter(nextCharRune) {
 				result = result + "~"
 
-				// ^~~WORD....
-			} else if unicode.IsLetter(lastCharRune) == false && nextChar == "~" && nextNextChar != "~" {
+				// ^~~WORD.... or ....WORD~~^
+			} else if nextChar == "~" {
 				if delTagOpen == false {
 					result = result + "<del>"
 					delTagOpen = true
-				}
 
-				// ....WORD~~^
-			} else if lastChar != "~" && nextChar == "~" && unicode.IsLetter(nextNextCharRune) == false {
-				if delTagOpen == true {
+				} else {
 					result = result + "</del>"
 					delTagOpen = false
 				}
+
+				skip = 1
+
+			} else {
+				result = result + "~"
 			}
 
 			// ^ - space
 			// Code quote
 		} else if char == "`" {
-			// WORD`WORD
-			if lastChar != " " && nextChar != " " {
-				result = result + "`"
-
-				// a`a
-			} else if unicode.IsLetter(lastCharRune) && unicode.IsLetter(nextCharRune) {
+			// a`a
+			if unicode.IsLetter(lastCharRune) && unicode.IsLetter(nextCharRune) {
 				result = result + "`"
 
 				// ^`.... or ....`^
@@ -227,7 +225,6 @@ func mdStyle(line string) string {
 					result = result + "</code>"
 					codeTagOpen = false
 				}
-
 			}
 
 			// If not formated text
