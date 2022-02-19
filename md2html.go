@@ -115,7 +115,7 @@ func Convert(text string) string {
 			}
 
 			// If code block: <pre><code>
-		} else if line == "```" {
+		} else if strings.HasPrefix(line, "```") {
 			if codeTagOpen == false {
 				if pTagOpen == true {
 					line = "</p><pre><code>"
