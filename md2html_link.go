@@ -18,6 +18,10 @@
 
 package md2html
 
+import (
+	"unicode"
+)
+
 // Replace [Example domain](https://example.org) to <a>
 // Replace ![Alt text](https://example.org/image.png) to <img>
 func mdLink(line string) string {
@@ -33,10 +37,11 @@ func mdLink(line string) string {
 
 	for i := range lineRune {
 		lastLastChar := " "
+		lastCharRune := ' '
 		lastChar := " "
 		char := string(lineRune[i])
+		nextCharRune := ' '
 		nextChar := " "
-		nextNextChar := " "
 
 		// Get last last char
 		if i > 1 {
@@ -45,21 +50,18 @@ func mdLink(line string) string {
 
 		// Get last char
 		if i != 0 {
-			lastChar = string(lineRune[i-1])
+			lastCharRune = lineRune[i-1]
+			lastChar = string(lastCharRune)
 		}
 
 		// Get next char
 		if lineLen > i+1 {
-			nextChar = string(lineRune[i+1])
-		}
-
-		// Get next next char
-		if lineLen > i+2 {
-			nextNextChar = string(lineRune[i+2])
+			nextCharRune = lineRune[i+1]
+			nextChar = string(nextCharRune)
 		}
 
 		// Link start: ^[....
-		if lastChar == " " && char == "[" {
+		if unicode.IsLetter(lastCharRune) == false && char == "[" {
 			nowRead = "arg1"
 			contType = "link"
 
@@ -86,8 +88,8 @@ func mdLink(line string) string {
 			if nextChar == ")" {
 				arg2 = arg2 + char
 
-				// ....)^ or ....).^
-			} else if nextChar == " " || nextNextChar == " " {
+				// ....)^
+			} else if unicode.IsLetter(nextCharRune) == false {
 				if contType == "link" {
 					result = result + "<a href='" + arg2 + "'>" + arg1 + "</a>"
 
