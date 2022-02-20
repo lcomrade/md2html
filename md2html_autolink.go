@@ -33,22 +33,21 @@ func mdAutolink(line string) string {
 
 	for i := range lineSplit {
 		buffer := lineSplit[i]
-		bufferLen := len(buffer)
 
 		// http://*
-		if bufferLen > 7 && strings.HasPrefix(buffer, "http://") {
+		if strings.HasPrefix(buffer, "http://") {
 			buffer = "<a href='" + buffer + "'>" + buffer + "</a>"
 
 			// https://*
-		} else if bufferLen > 8 && strings.HasPrefix(buffer, "https://") {
+		} else if strings.HasPrefix(buffer, "https://") {
 			buffer = "<a href='" + buffer + "'>" + buffer + "</a>"
 
 			// ftp://*
-		} else if bufferLen > 6 && strings.HasPrefix(buffer, "ftp://") {
+		} else if strings.HasPrefix(buffer, "ftp://") {
 			buffer = "<a href='" + buffer + "'>" + buffer + "</a>"
 
 			// irc://*
-		} else if bufferLen > 6 && strings.HasPrefix(buffer, "irc://") {
+		} else if strings.HasPrefix(buffer, "irc://") {
 			buffer = "<a href='" + buffer + "'>" + buffer + "</a>"
 
 			// Email
@@ -66,15 +65,22 @@ func mdAutolink(line string) string {
 	return result
 }
 
-// Checks if the string is an email address
+// Checks if the string is an email address.
+// More about email addres format in Wikipedia:
+// https://en.wikipedia.org/wiki/Email_address
 func isEmail(line string) bool {
 	lineRune := []rune(line)
+	lineLen := len(lineRune)
 
 	var signChar bool = false // '@' char
 
-	for i := range lineRune {
-		char := string(lineRune[i])
+	lastChar := " "
 
+	for i := range lineRune {
+		charRune := lineRune[i]
+		char := string(charRune)
+
+		// Sign
 		if char == "@" {
 			// '@' repeated two
 			if signChar == true {
@@ -86,10 +92,56 @@ func isEmail(line string) bool {
 				return false
 			}
 
+			// '.@'
+			if lastChar == "." {
+				return false
+			}
+
 			signChar = true
+
+			// Dot
+		} else if char == "." {
+			// '.abcd@example.org'
+			if i == 0 {
+				return false
+			}
+
+			// 'abcd@.example.org'
+			if lastChar == "@" {
+				return false
+			}
+
+			// 'abcd@example.org.'
+			if i == lineLen-1 {
+				return false
+			}
+
+			// 'ab..cd@example.org' or 'abcd@exa..mple.org'
+			if lastChar == "." {
+				return false
+			}
+
+			// Numbers
+		} else if isNumber(charRune) {
+			//pass
+
+			// Latin letters
+		} else if isLatinLetter(charRune) {
+			//pass
+
+			// Printable chars
+		} else if isPrintableChar(charRune) {
+			//pass
+
+			// Unknown char
+		} else {
+			return false
 		}
+
+		lastChar = char
 	}
 
+	// If '@' char not exist in line
 	if signChar == true {
 		return true
 	}
