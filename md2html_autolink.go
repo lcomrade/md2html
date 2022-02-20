@@ -34,6 +34,9 @@ func mdAutolink(line string) string {
 	for i := range lineSplit {
 		buffer := lineSplit[i]
 
+		// Find and remove brackets
+		buffer = removeBrackets(buffer)
+
 		// http://*
 		if strings.HasPrefix(buffer, "http://") {
 			buffer = "<a href='" + buffer + "'>" + buffer + "</a>"
@@ -63,6 +66,39 @@ func mdAutolink(line string) string {
 	}
 
 	return result
+}
+
+// Removes opening and closing brackets
+func removeBrackets(line string) string {
+	lineLen := len(line)
+	if lineLen <= 3 {
+		return line
+	}
+
+	brackets := []string{
+		"()", "<>", "[]", "{}",
+	}
+
+	firstChar := string(line[0])
+	preLastChar := string(line[lineLen-2])
+	lastChar := string(line[lineLen-1])
+
+	for _, br := range brackets {
+		openBracket := string(br[0])
+		closeBracket := string(br[1])
+
+		// '(....)'
+		if firstChar == openBracket && lastChar == closeBracket {
+			return line[1 : lineLen-1]
+		}
+
+		// '(....).'
+		if firstChar == openBracket && preLastChar == closeBracket {
+			return line[1 : lineLen-2]
+		}
+	}
+
+	return line
 }
 
 // Checks if the string is an email address.
