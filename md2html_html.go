@@ -20,6 +20,7 @@ package md2html
 
 import (
 	"strings"
+	"unicode"
 )
 
 // Shild HTML character
@@ -57,11 +58,12 @@ func toHTMLID(line string) string {
 
 	lineRune := []rune(line)
 
-	var lastChar string = " "
-	var tagOpen bool = true
+	var tagOpen bool = false
+	var lastLetter bool = false
 
 	for i := range lineRune {
-		char := string(lineRune[i])
+		charRune := lineRune[i]
+		char := string(charRune)
 
 		// HTML tags
 		if char == "<" {
@@ -74,50 +76,17 @@ func toHTMLID(line string) string {
 			//pass
 
 			// Special chars
-		} else if char == " " {
-			if lastChar != " " {
-				result = result + "_"
+		} else if unicode.IsLetter(charRune) == false {
+			if lastLetter == true {
+				lastLetter = false
+				result = result + "-"
 			}
-
-		} else if char == "#" {
-			//pass
-
-		} else if char == "&" {
-			//pass
-
-		} else if char == "/" {
-			//pass
-
-		} else if char == `\` {
-			//pass
-
-		} else if char == "|" {
-			//pass
-
-		} else if char == ":" {
-			//pass
-
-		} else if char == ";" {
-			//pass
-
-		} else if char == `"` {
-			//pass
-
-		} else if char == "'" {
-			//pass
-
-		} else if char == "`" {
-			//pass
-
-		} else if char == "~" {
-			//pass
 
 			// Else: save char
 		} else {
+			lastLetter = true
 			result = result + char
 		}
-
-		lastChar = char
 	}
 
 	return strings.ToLower(result)
