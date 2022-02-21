@@ -88,6 +88,11 @@ func mdStyle(line string) string {
 		if char != "`" && codeTagOpen == true {
 			result = result + shieldHTMLChar(char)
 
+			// Replace \` to `
+		} else if char == `\` && nextChar == "`" {
+			result = result + "`"
+			skip = 1
+
 			// Replace \* to *
 		} else if char == `\` && nextChar == "*" {
 			result = result + "*"
@@ -101,6 +106,16 @@ func mdStyle(line string) string {
 			// Replace \~ to ~
 		} else if char == `\` && nextChar == "~" {
 			result = result + "~"
+			skip = 1
+
+			// Replace \+ to +
+		} else if char == `\` && nextChar == "+" {
+			result = result + "+"
+			skip = 1
+
+			// Replace \- to -
+		} else if char == `\` && nextChar == "-" {
+			result = result + "-"
 			skip = 1
 
 			// Replace \. to .

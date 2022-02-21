@@ -94,7 +94,17 @@ NOTE: `-` may be replaced by `+` or `*`
 | `\*`  | `*`    |
 | `\_`  | `_`    |
 | `\~`  | `~`    |
+| `\+`  | `+`    |
+| `\-`  | `-`    |
 | `\.`  | `.`    |
+
+You can also use this for code quote:
+```markdown
+\` ----> `
+
+\`my code\` ----> `my code`
+```
+
 
 
 ## Paragraphs
