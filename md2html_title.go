@@ -23,39 +23,65 @@ import (
 )
 
 // Replace # - ###### to <h1> - <h6>
-// Return formated string and 'sHeader'bool var
+// Return formated string and 'is header' boolean
 func mdTitle(line string) (string, bool) {
 	lineRune := []rune(line)
 
 	if strings.HasPrefix(line, "# ") {
 		title := string(lineRune[2:])
+		title = trimTitleSharp(title)
 		return "<h1 id='" + toHTMLID(title) + "'>" + title + "</h1>", true
 	}
 
 	if strings.HasPrefix(line, "## ") {
 		title := string(lineRune[3:])
+		title = trimTitleSharp(title)
 		return "<h2 id='" + toHTMLID(title) + "'>" + title + "</h2>", true
 	}
 
 	if strings.HasPrefix(line, "### ") {
 		title := string(lineRune[4:])
+		title = trimTitleSharp(title)
 		return "<h3 id='" + toHTMLID(title) + "'>" + title + "</h3>", true
 	}
 
 	if strings.HasPrefix(line, "#### ") {
 		title := string(lineRune[5:])
+		title = trimTitleSharp(title)
 		return "<h4 id='" + toHTMLID(title) + "'>" + title + "</h4>", true
 	}
 
 	if strings.HasPrefix(line, "##### ") {
 		title := string(lineRune[6:])
+		title = trimTitleSharp(title)
 		return "<h5 id='" + toHTMLID(title) + "'>" + title + "</h5>", true
 	}
 
 	if strings.HasPrefix(line, "###### ") {
 		title := string(lineRune[7:])
+		title = trimTitleSharp(title)
 		return "<h6 id='" + toHTMLID(title) + "'>" + title + "</h6>", true
 	}
 
 	return line, false
+}
+
+// Convert '## Some title ####' to '## Some title'
+func trimTitleSharp(line string) string {
+	lineRune := []rune(line)
+	lineLen := len(lineRune)
+
+	endI := 0
+
+	for i := range line {
+		char := lineRune[lineLen-i-1]
+
+		if char != '#' {
+			break
+		}
+
+		endI = endI + 1
+	}
+
+	return string(line[:lineLen-endI-1])
 }

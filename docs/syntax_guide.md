@@ -9,6 +9,13 @@
 ###### This is a H6 header
 ```
 
+```markdown
+## Closed H2 title #
+## Closed H2 title ##
+## Closed H2 title ######
+```
+
+
 
 ## Text style
 | Style           | Markdown                           | View          | HTML                                |
