@@ -83,5 +83,9 @@ func trimTitleSharp(line string) string {
 		endI = endI + 1
 	}
 
-	return string(line[:lineLen-endI-1])
+	if endI != 0 {
+		return string(line[:lineLen-endI-1])
+	}
+
+	return line
 }
