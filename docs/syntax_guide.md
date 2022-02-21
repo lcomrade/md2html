@@ -48,6 +48,15 @@ go help build
 ```
 ````
 
+`````markdown
+````markdown
+```golang
+go doc
+go tool dist list
+go help build
+```
+````
+`````
 
 ## Unordered list
 NOTE: `-` may be replaced by `+` or `*`

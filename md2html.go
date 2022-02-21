@@ -84,6 +84,7 @@ func Convert(text string) string {
 	// Track opened HTML tags
 	var pTagOpen bool = false
 	var codeTagOpen bool = false
+	var codeTagCloseLine string = ""
 	var ulTagOpen int = 0
 	var olTagOpen int = 0
 	var isHeader bool = false
@@ -93,8 +94,14 @@ func Convert(text string) string {
 		line := lines[i]
 
 		// Shield characters inside <pre><code>....</code></pre>
-		if line != "```" && codeTagOpen == true {
-			line = shieldHTML(line) + lineSeparator
+		if codeTagOpen == true {
+			if line == codeTagCloseLine {
+				line = "</code></pre>"
+				codeTagOpen = false
+
+			} else {
+				line = shieldHTML(line) + lineSeparator
+			}
 
 			// End paragraph: </p> and </ol>
 		} else if line == "" {
@@ -116,21 +123,21 @@ func Convert(text string) string {
 
 			// If code block: <pre><code>
 		} else if strings.HasPrefix(line, "```") {
-			if codeTagOpen == false {
-				if pTagOpen == true {
-					line = "</p><pre><code>"
-					pTagOpen = false
+			if strings.HasPrefix(line, "````") {
+				codeTagCloseLine = "````"
+			} else {
+				codeTagCloseLine = "```"
+			}
 
-				} else {
-					line = "<pre><code>"
-				}
-
-				codeTagOpen = true
+			if pTagOpen == true {
+				line = "</p><pre><code>"
+				pTagOpen = false
 
 			} else {
-				line = "</code></pre>"
-				codeTagOpen = false
+				line = "<pre><code>"
 			}
+
+			codeTagOpen = true
 
 			// Other text
 		} else {
