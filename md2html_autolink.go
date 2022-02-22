@@ -90,12 +90,12 @@ func removeBrackets(line string) (string, string, string) {
 
 		// '(....)'
 		if firstChar == openBracket && lastChar == closeBracket {
-			return line[1 : lineLen-1], openBracket, closeBracket
+			return line[1 : lineLen-1], shieldHTML(openBracket), shieldHTML(closeBracket)
 		}
 
 		// '(....).'
 		if firstChar == openBracket && preLastChar == closeBracket {
-			return line[1 : lineLen-2], openBracket, closeBracket + lastChar
+			return line[1 : lineLen-2], shieldHTML(openBracket), shieldHTML(closeBracket) + lastChar
 		}
 	}
 
