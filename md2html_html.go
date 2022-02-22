@@ -89,5 +89,15 @@ func toHTMLID(line string) string {
 		}
 	}
 
+	// Remove '-' from beginning and end
+	if result[0] == '-' {
+		result = string(result[1:])
+	}
+
+	resultLen := len(result)
+	if result[resultLen-1] == '-' {
+		result = string(result[:resultLen-1])
+	}
+
 	return strings.ToLower(result)
 }
