@@ -65,7 +65,7 @@ func TestConvert(t *testing.T) {
 		},
 		{
 			Input:        "### My      Header",
-			ExpectResult: "<h3 id='my-header'>My      Header</h3>",
+			ExpectResult: "<h3 id='my-header'>My Header</h3>",
 		},
 		{
 			Input:        "### My Header",
@@ -117,8 +117,12 @@ func TestConvert(t *testing.T) {
 			ExpectResult: "<p>test * test *</p>",
 		},
 		{
-			Input:        " aa*aa",
-			ExpectResult: "<p> aa*aa</p>",
+			Input:        "  aa*aa",
+			ExpectResult: "<p>aa*aa</p>",
+		},
+		{
+			Input:        "This is test!     ",
+			ExpectResult: "<p>This is test!</p>",
 		},
 		// Link and image
 		{
@@ -162,6 +166,10 @@ func TestConvert(t *testing.T) {
 		{
 			Input:        "`man whereis`",
 			ExpectResult: "<p><code>man whereis</code></p>",
+		},
+		{
+			Input:        "`  test      test   `",
+			ExpectResult: "<p><code>  test      test   </code></p>",
 		},
 		{
 			Input:        "aaa`aaa",
@@ -304,7 +312,7 @@ Code: <code>my code</code>
 	for _, test := range testData {
 		result := Convert(test.Input)
 		if result != test.ExpectResult {
-			t.Error("\n" + "Input:    " + test.Input + "\n" + "Expected: " + test.ExpectResult + "\n" + "But get:  " + result)
+			t.Error("\n" + "Input:    '" + test.Input + "'\n" + "Expected: '" + test.ExpectResult + "'\n" + "But get:  '" + result + "'")
 		}
 	}
 }

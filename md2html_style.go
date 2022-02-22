@@ -89,6 +89,10 @@ func mdStyle(line string) string {
 		if char != "`" && codeTagOpen == true {
 			result = result + shieldHTMLChar(charRune)
 
+			// Remove many spaces
+		} else if lastChar == " " && char == " " {
+			//pass
+
 			// Replace \` to `
 		} else if char == `\` && nextChar == "`" {
 			result = result + "`"
@@ -252,6 +256,12 @@ func mdStyle(line string) string {
 		} else {
 			result = result + char
 		}
+	}
+
+	// Remove space from end
+	resultLen := len(result)
+	if result[resultLen-1] == ' ' {
+		result = string(result[:resultLen-1])
 	}
 
 	// If HTML tags not closed
