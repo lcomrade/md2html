@@ -24,17 +24,17 @@ import (
 )
 
 // Shild HTML character
-func shieldHTMLChar(char string) string {
+func shieldHTMLChar(char rune) string {
 	switch char {
-	case "<":
+	case '<':
 		return "&lt"
-	case ">":
+	case '>':
 		return "&gt"
-	case "&":
+	case '&':
 		return "&amp"
 	}
 
-	return char
+	return string(char)
 }
 
 // Shields all HTML code inside text
@@ -44,9 +44,9 @@ func shieldHTML(text string) string {
 	textRune := []rune(text)
 
 	for i := range textRune {
-		char := string(textRune[i])
+		charRune := textRune[i]
 
-		result = result + shieldHTMLChar(char)
+		result = result + shieldHTMLChar(charRune)
 	}
 
 	return result

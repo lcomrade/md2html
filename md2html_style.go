@@ -52,7 +52,8 @@ func mdStyle(line string) string {
 
 		lastCharRune := ' '
 		lastChar := " "
-		char := string(lineRune[i])
+		charRune := lineRune[i]
+		char := string(charRune)
 		nextCharRune := ' '
 		nextChar := " "
 		nextNextCharRune := ' '
@@ -86,7 +87,7 @@ func mdStyle(line string) string {
 
 		// Shielding characters inside <code>....</code>
 		if char != "`" && codeTagOpen == true {
-			result = result + shieldHTMLChar(char)
+			result = result + shieldHTMLChar(charRune)
 
 			// Replace \` to `
 		} else if char == `\` && nextChar == "`" {

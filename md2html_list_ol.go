@@ -35,7 +35,8 @@ func mdOList(line string) (bool, int, string) {
 	var step string = "space" // space, num, skip, content
 
 	for i := range lineRune {
-		char := string(lineRune[i])
+		charRune := lineRune[i]
+		char := string(charRune)
 		nextChar := " "
 
 		// Get next char
@@ -48,7 +49,7 @@ func mdOList(line string) (bool, int, string) {
 			if char == " " {
 				spaceNum = spaceNum + 1
 
-			} else if isNum(char) {
+			} else if isNumber(charRune) {
 				step = "num"
 
 			} else {
@@ -57,7 +58,7 @@ func mdOList(line string) (bool, int, string) {
 
 			// 'num' step: nums after spaces
 		} else if step == "num" {
-			if isNum(char) == false {
+			if isNumber(charRune) == false {
 				if char == "." && nextChar == " " {
 					step = "skip"
 
