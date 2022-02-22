@@ -109,6 +109,11 @@ func mdStyle(line string) string {
 			result = result + "~"
 			skip = 1
 
+			// Replace \# to #
+		} else if char == `\` && nextChar == "#" {
+			result = result + "#"
+			skip = 1
+
 			// Replace \+ to +
 		} else if char == `\` && nextChar == "+" {
 			result = result + "+"

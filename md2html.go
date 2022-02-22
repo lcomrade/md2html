@@ -190,15 +190,15 @@ func Convert(text string) string {
 				}
 
 			} else {
+				// Header format: <h1> - <h6>
+				line, isHeader = mdTitle(line)
+
 				// Text format: <em>, <strong> and <code>
 				line = mdStyle(line)
 
 				// Links and images: <a> and <img>
 				line = mdLink(line)
 				line = mdAutolink(line)
-
-				// Header format: <h1> - <h6>
-				line, isHeader = mdTitle(line)
 
 				// Paragraph or header?
 				if isHeader == false {
