@@ -6,6 +6,12 @@
 **md2html** is a golang library for converting Markdown to HTML.
 
 ## Install
+Supported Go versions:
+- 1.9
+- 1.11
+- 1.17
+
+Download:
 ```
 go get github.com/lcomrade/md2html
 ```
