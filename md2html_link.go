@@ -61,7 +61,7 @@ func mdLink(line string) string {
 		}
 
 		// Link start: ^[....
-		if unicode.IsLetter(lastCharRune) == false && char == "[" {
+		if unicode.IsLetter(lastCharRune) == false && lastChar != "!" && char == "[" {
 			nowRead = "arg1"
 			contType = "link"
 
