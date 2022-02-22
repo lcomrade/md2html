@@ -109,7 +109,7 @@ func isEmail(line string) bool {
 	lineRune := []rune(line)
 	lineLen := len(lineRune)
 
-	var signChar bool = false // '@' char
+	var signCharExist bool = false // '@' char
 
 	lastChar := " "
 
@@ -120,7 +120,7 @@ func isEmail(line string) bool {
 		// Sign
 		if char == "@" {
 			// '@' repeated two
-			if signChar == true {
+			if signCharExist == true {
 				return false
 			}
 
@@ -134,7 +134,7 @@ func isEmail(line string) bool {
 				return false
 			}
 
-			signChar = true
+			signCharExist = true
 
 			// Dot
 		} else if char == "." {
@@ -179,9 +179,14 @@ func isEmail(line string) bool {
 	}
 
 	// If '@' char not exist in line
-	if signChar == true {
-		return true
+	if signCharExist == false {
+		return false
 	}
 
-	return false
+	// If '@' is end line
+	if lastChar == "@" {
+		return false
+	}
+
+	return true
 }
