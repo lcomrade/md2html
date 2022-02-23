@@ -33,6 +33,7 @@ func mdAutolink(line string) string {
 
 	for i := range lineSplit {
 		buffer := lineSplit[i]
+		isLink := true
 
 		// Find and remove brackets
 		buffer, bufferStart, bufferEnd := removeBrackets(buffer)
@@ -56,6 +57,14 @@ func mdAutolink(line string) string {
 			// Email
 		} else if isEmail(buffer) {
 			buffer = "<a href='mailto:" + buffer + "'>" + buffer + "</a>"
+
+		} else {
+			isLink = false
+		}
+
+		if isLink == true {
+			bufferStart = shieldHTML(bufferStart)
+			bufferEnd = shieldHTML(bufferEnd)
 		}
 
 		buffer = bufferStart + buffer + bufferEnd
@@ -90,12 +99,12 @@ func removeBrackets(line string) (string, string, string) {
 
 		// '(....)'
 		if firstChar == openBracket && lastChar == closeBracket {
-			return line[1 : lineLen-1], shieldHTML(openBracket), shieldHTML(closeBracket)
+			return line[1 : lineLen-1], openBracket, closeBracket
 		}
 
 		// '(....).'
 		if firstChar == openBracket && preLastChar == closeBracket {
-			return line[1 : lineLen-2], shieldHTML(openBracket), shieldHTML(closeBracket) + lastChar
+			return line[1 : lineLen-2], openBracket, closeBracket + lastChar
 		}
 	}
 
