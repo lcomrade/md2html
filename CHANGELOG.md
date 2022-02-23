@@ -1,6 +1,20 @@
 # Changelog
 Semantic versioning is used (https://semver.org/).
 
+## v2.0.0
+There is nothing dramatically new in this release.
+But the quality of Markdown detection has improved noticeably.
+
+- Closing headers are now supported
+- Allow escape backtick, `+`, `-` and `#`
+- Cleaning the HTML from extra spaces
+- Add support opening and closing code block with 4 reverse apostrophes
+- Fix: HTML ID generation
+- Fix: image
+- Fix: `))` in links
+- Fix: email detection
+- Fix: remove brackets around URL
+
 ## v1.2.0
 - Autolink now work in lists
 - Autolink now work in headers
