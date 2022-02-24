@@ -121,6 +121,54 @@ func TestConvert(t *testing.T) {
 			ExpectResult: "<p>aa*aa</p>",
 		},
 		{
+			Input:        "(*test test*)",
+			ExpectResult: "<p>(<em>test test</em>)</p>",
+		},
+		{
+			Input:        "(**test test**)",
+			ExpectResult: "<p>(<strong>test test</strong>)</p>",
+		},
+		{
+			Input:        "(***test test***)",
+			ExpectResult: "<p>(<strong><em>test test</em></strong>)</p>",
+		},
+		{
+			Input:        "(~~test test~~)",
+			ExpectResult: "<p>(<del>test test</del>)</p>",
+		},
+		{
+			Input:        "*aaaaa (bbbbb)* - ccccc.",
+			ExpectResult: "<p><em>aaaaa (bbbbb)</em> - ccccc.</p>",
+		},
+		{
+			Input:        "*(bbbbb) aaaaa* - ccccc.",
+			ExpectResult: "<p><em>(bbbbb) aaaaa</em> - ccccc.</p>",
+		},
+		{
+			Input:        "**aaaaa (bbbbb)** - ccccc.",
+			ExpectResult: "<p><strong>aaaaa (bbbbb)</strong> - ccccc.</p>",
+		},
+		{
+			Input:        "**(bbbbb) aaaaa** - ccccc.",
+			ExpectResult: "<p><strong>(bbbbb) aaaaa</strong> - ccccc.</p>",
+		},
+		{
+			Input:        "***aaaaa (bbbbb)*** - ccccc.",
+			ExpectResult: "<p><strong><em>aaaaa (bbbbb)</em></strong> - ccccc.</p>",
+		},
+		{
+			Input:        "***(bbbbb) aaaaa*** - ccccc.",
+			ExpectResult: "<p><strong><em>(bbbbb) aaaaa</em></strong> - ccccc.</p>",
+		},
+		{
+			Input:        "~~aaaaa (bbbbb)~~ - ccccc.",
+			ExpectResult: "<p><del>aaaaa (bbbbb)</del> - ccccc.</p>",
+		},
+		{
+			Input:        "~~(bbbbb) aaaaa~~ - ccccc.",
+			ExpectResult: "<p><del>(bbbbb) aaaaa</del> - ccccc.</p>",
+		},
+		{
 			Input:        "This is test!     ",
 			ExpectResult: "<p>This is test!</p>",
 		},
