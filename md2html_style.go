@@ -145,6 +145,18 @@ func mdStyle(line string) string {
 			} else if unicode.IsLetter(lastCharRune) && unicode.IsLetter(nextCharRune) {
 				result = result + char
 
+				// a**a
+			} else if unicode.IsLetter(lastCharRune) && nextChar == char && unicode.IsLetter(nextNextCharRune) {
+				result = result + char + char
+
+				skip = 1
+
+				// a***a
+			} else if unicode.IsLetter(lastCharRune) && nextChar == char && nextNextChar == char && unicode.IsLetter(nextNextNextCharRune) {
+				result = result + char + char + char
+
+				skip = 2
+
 				// ^***WORD.... or ....WORD***^
 			} else if lastChar != char && nextChar == char && nextNextChar == char && nextNextNextChar != char {
 				//} else if unicode.IsLetter(lastCharRune) == false && nextChar == char && nextNextChar == char && nextNextNextChar != char {
@@ -200,6 +212,9 @@ func mdStyle(line string) string {
 					result = result + "</em>"
 					emTagOpen = false
 				}
+
+			} else {
+				result = result + char
 			}
 
 			// ^ - space
@@ -257,8 +272,10 @@ func mdStyle(line string) string {
 
 	// Remove space from end
 	resultLen := len(result)
-	if result[resultLen-1] == ' ' {
-		result = string(result[:resultLen-1])
+	if resultLen-1 >= 0 {
+		if result[resultLen-1] == ' ' {
+			result = string(result[:resultLen-1])
+		}
 	}
 
 	// If HTML tags not closed
