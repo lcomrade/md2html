@@ -192,6 +192,46 @@ func TestConvert(t *testing.T) {
 			Input:        "aaaaa*********aaaaaa",
 			ExpectResult: "<p>aaaaa*********aaaaaa</p>",
 		},
+		{
+			Input:        "****test test",
+			ExpectResult: "<p>****test test</p>",
+		},
+		{
+			Input:        "test test****",
+			ExpectResult: "<p>test test****</p>",
+		},
+		{
+			Input:        "~",
+			ExpectResult: "<p>~</p>",
+		},
+		{
+			Input:        "~~",
+			ExpectResult: "<p>~~</p>",
+		},
+		{
+			Input:        "~~~",
+			ExpectResult: "<p>~~~</p>",
+		},
+		{
+			Input:        "~~~~~~~~",
+			ExpectResult: "<p>~~~~~~~~</p>",
+		},
+		{
+			Input:        "aaa~aaa",
+			ExpectResult: "<p>aaa~aaa</p>",
+		},
+		{
+			Input:        "aaa~~aaa",
+			ExpectResult: "<p>aaa~~aaa</p>",
+		},
+		{
+			Input:        "~~~~test test",
+			ExpectResult: "<p>~~~~test test</p>",
+		},
+		{
+			Input:        "test test~~~~",
+			ExpectResult: "<p>test test~~~~</p>",
+		},
 		// Link and image
 		{
 			Input:        "[example domain](https://example.org)",

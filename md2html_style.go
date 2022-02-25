@@ -224,12 +224,24 @@ func mdStyle(line string) string {
 			if lastChar == " " && nextChar == " " {
 				result = result + "~"
 
+				// ^~~^
+			} else if lastChar == " " && nextChar == "~" && nextNextChar == " " {
+				result = result + "~~"
+
+				skip = 1
+
 				// a~a
 			} else if unicode.IsLetter(lastCharRune) && unicode.IsLetter(nextCharRune) {
 				result = result + "~"
 
+				// a~~a
+			} else if unicode.IsLetter(lastCharRune) && nextChar == "~" && unicode.IsLetter(nextNextCharRune) {
+				result = result + "~~"
+
+				skip = 1
+
 				// ^~~WORD.... or ....WORD~~^
-			} else if nextChar == "~" {
+			} else if lastChar != "~" && nextChar == "~" && nextNextChar != "~" {
 				if delTagOpen == false {
 					result = result + "<del>"
 					delTagOpen = true
@@ -251,6 +263,12 @@ func mdStyle(line string) string {
 			// a`a
 			if unicode.IsLetter(lastCharRune) && unicode.IsLetter(nextCharRune) {
 				result = result + "`"
+
+				// a``a
+			} else if unicode.IsLetter(lastCharRune) && nextChar == "`" && unicode.IsLetter(nextNextCharRune) {
+				result = result + "``"
+
+				skip = 1
 
 				// ^`.... or ....`^
 			} else {
