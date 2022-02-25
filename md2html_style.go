@@ -37,6 +37,7 @@ func mdStyle(line string) string {
 	// Track opened HTML tags
 	var emTagOpen bool = false
 	var strongTagOpen bool = false
+	var strongEmTagOpen bool = false
 	var delTagOpen bool = false
 	var codeTagOpen bool = false
 
@@ -144,62 +145,58 @@ func mdStyle(line string) string {
 			} else if unicode.IsLetter(lastCharRune) && unicode.IsLetter(nextCharRune) {
 				result = result + char
 
-				// ^***WORD....
-			} else if unicode.IsLetter(lastCharRune) == false && nextChar == char && nextNextChar == char && nextNextNextChar != char {
-				if strongTagOpen == false {
-					result = result + "<strong>"
-					strongTagOpen = true
-				}
+				// ^***WORD.... or ....WORD***^
+			} else if lastChar != char && nextChar == char && nextNextChar == char && nextNextNextChar != char {
+				//} else if unicode.IsLetter(lastCharRune) == false && nextChar == char && nextNextChar == char && nextNextNextChar != char {
+				if strongEmTagOpen == false {
+					if strongTagOpen == false {
+						result = result + "<strong>"
+						strongTagOpen = true
+					}
 
-				if emTagOpen == false {
-					result = result + "<em>"
-					emTagOpen = true
+					if emTagOpen == false {
+						result = result + "<em>"
+						emTagOpen = true
+					}
+
+					strongEmTagOpen = true
+
+				} else {
+					if emTagOpen == true {
+						result = result + "</em>"
+						emTagOpen = false
+					}
+
+					if strongTagOpen == true {
+						result = result + "</strong>"
+						strongTagOpen = false
+					}
+
+					strongEmTagOpen = false
 				}
 
 				skip = 2
 
-				// ....WORD***^
-			} else if lastChar != char && nextChar == char && nextNextChar == char && unicode.IsLetter(nextNextNextCharRune) == false {
-				if emTagOpen == true {
-					result = result + "</em>"
-					emTagOpen = false
-				}
-
-				if strongTagOpen == true {
-					result = result + "</strong>"
-					strongTagOpen = false
-				}
-
-				skip = 2
-
-				// ^**WORD....
-			} else if unicode.IsLetter(lastCharRune) == false && nextChar == char && nextNextChar != char {
+				// ^**WORD.... or ....WORD**^
+			} else if lastChar != char && nextChar == char && nextNextChar != char {
 				if strongTagOpen == false {
 					result = result + "<strong>"
 					strongTagOpen = true
-				}
 
-				skip = 1
-
-				// ....WORD**^
-			} else if lastChar != char && nextChar == char && unicode.IsLetter(nextNextCharRune) == false {
-				if strongTagOpen == true {
+				} else {
 					result = result + "</strong>"
 					strongTagOpen = false
 				}
 
 				skip = 1
 
-				// ^*WORD....
-			} else if unicode.IsLetter(lastCharRune) == false && nextChar != char {
+				// ^*WORD.... or ....WORD*^
+			} else if lastChar != char && nextChar != char {
 				if emTagOpen == false {
 					result = result + "<em>"
 					emTagOpen = true
-				}
 
-				// ....WORD*^
-			} else if lastChar != char && unicode.IsLetter(nextCharRune) == false {
-				if emTagOpen == true {
+				} else {
 					result = result + "</em>"
 					emTagOpen = false
 				}
