@@ -1,6 +1,12 @@
 # Changelog
 Semantic versioning is used (https://semver.org/).
 
+## v2.0.1
+- Fix: \`\`\` in row
+- Fix: `*`, `-`, `~` inside word
+- Fix: strong and em tag close
+- Fix: `<>` brackets in non links
+
 ## v2.0.0
 There is nothing dramatically new in this release.
 But the quality of Markdown detection has improved noticeably.
