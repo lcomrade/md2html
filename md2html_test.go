@@ -283,6 +283,18 @@ func TestConvert(t *testing.T) {
 			Input:        "aaa`aaa",
 			ExpectResult: "<p>aaa`aaa</p>",
 		},
+		{
+			Input:        "aaa``aaa",
+			ExpectResult: "<p>aaa``aaa</p>",
+		},
+		{
+			Input:        "aaa```aaa",
+			ExpectResult: "<p>aaa```aaa</p>",
+		},
+		{
+			Input:        "``",
+			ExpectResult: "<p>``</p>",
+		},
 		// Unordered list
 		{
 			Input: `

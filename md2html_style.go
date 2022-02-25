@@ -271,7 +271,7 @@ func mdStyle(line string) string {
 				skip = 1
 
 				// ^`.... or ....`^
-			} else {
+			} else if lastChar != "`" && nextChar != "`" {
 				if codeTagOpen == false {
 					result = result + "<code>"
 					codeTagOpen = true
@@ -280,6 +280,9 @@ func mdStyle(line string) string {
 					result = result + "</code>"
 					codeTagOpen = false
 				}
+
+			} else {
+				result = result + "`"
 			}
 
 			// If not formated text
