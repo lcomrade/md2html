@@ -92,8 +92,28 @@ func TestConvert(t *testing.T) {
 			ExpectResult: "<p>###</p>",
 		},
 		{
+			Input:        "#   ",
+			ExpectResult: "<p>#</p>",
+		},
+		{
 			Input:        "##   ",
 			ExpectResult: "<p>##</p>",
+		},
+		{
+			Input:        "###   ",
+			ExpectResult: "<p>###</p>",
+		},
+		{
+			Input:        "####   ",
+			ExpectResult: "<p>####</p>",
+		},
+		{
+			Input:        "#####   ",
+			ExpectResult: "<p>#####</p>",
+		},
+		{
+			Input:        "######   ",
+			ExpectResult: "<p>######</p>",
 		},
 		// Text style
 		{
