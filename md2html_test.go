@@ -83,6 +83,18 @@ func TestConvert(t *testing.T) {
 			Input:        "# My `good code` Header",
 			ExpectResult: "<h1 id='my-good-code-header'>My <code>good code</code> Header</h1>",
 		},
+		{
+			Input:        "#",
+			ExpectResult: "<p>#</p>",
+		},
+		{
+			Input:        "###",
+			ExpectResult: "<p>###</p>",
+		},
+		{
+			Input:        "##   ",
+			ExpectResult: "<p>##</p>",
+		},
 		// Text style
 		{
 			Input:        "*test test*",

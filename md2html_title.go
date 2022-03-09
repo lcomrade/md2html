@@ -29,36 +29,72 @@ func mdTitle(line string) (string, bool) {
 
 	if strings.HasPrefix(line, "# ") {
 		title := string(lineRune[2:])
+
+		// Catch empty titles: '#  '
+		if isOneCharLine(title, " ") {
+			return line, false
+		}
+
 		title = trimTitleSharp(title)
 		return "<h1 id='" + toHTMLID(title) + "'>" + title + "</h1>", true
 	}
 
 	if strings.HasPrefix(line, "## ") {
 		title := string(lineRune[3:])
+
+		// Catch empty titles: '##  '
+		if isOneCharLine(title, " ") {
+			return line, false
+		}
+
 		title = trimTitleSharp(title)
 		return "<h2 id='" + toHTMLID(title) + "'>" + title + "</h2>", true
 	}
 
 	if strings.HasPrefix(line, "### ") {
 		title := string(lineRune[4:])
+
+		// Catch empty titles: '###  '
+		if isOneCharLine(title, " ") {
+			return line, false
+		}
+
 		title = trimTitleSharp(title)
 		return "<h3 id='" + toHTMLID(title) + "'>" + title + "</h3>", true
 	}
 
 	if strings.HasPrefix(line, "#### ") {
 		title := string(lineRune[5:])
+
+		// Catch empty titles: '####  '
+		if isOneCharLine(title, " ") {
+			return line, false
+		}
+
 		title = trimTitleSharp(title)
 		return "<h4 id='" + toHTMLID(title) + "'>" + title + "</h4>", true
 	}
 
 	if strings.HasPrefix(line, "##### ") {
 		title := string(lineRune[6:])
+
+		// Catch empty titles: '#####  '
+		if isOneCharLine(title, " ") {
+			return line, false
+		}
+
 		title = trimTitleSharp(title)
 		return "<h5 id='" + toHTMLID(title) + "'>" + title + "</h5>", true
 	}
 
 	if strings.HasPrefix(line, "###### ") {
 		title := string(lineRune[7:])
+
+		// Catch empty titles: '######  '
+		if isOneCharLine(title, " ") {
+			return line, false
+		}
+
 		title = trimTitleSharp(title)
 		return "<h6 id='" + toHTMLID(title) + "'>" + title + "</h6>", true
 	}
