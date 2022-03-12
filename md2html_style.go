@@ -36,8 +36,14 @@ func mdStyle(line string) string {
 
 	// Track opened HTML tags
 	var emTagOpen bool = false
+	var emTagOpenChar string = ""
+
 	var strongTagOpen bool = false
+	var strongTagOpenChar string = ""
+
 	var strongEmTagOpen bool = false
+	var strongEmTagOpenChar string = ""
+
 	var delTagOpen bool = false
 	var codeTagOpen bool = false
 
@@ -159,8 +165,7 @@ func mdStyle(line string) string {
 
 				// ^***WORD.... or ....WORD***^
 			} else if lastChar != char && nextChar == char && nextNextChar == char && nextNextNextChar != char {
-				//} else if unicode.IsLetter(lastCharRune) == false && nextChar == char && nextNextChar == char && nextNextNextChar != char {
-				if strongEmTagOpen == false {
+				if strongEmTagOpen == false && emTagOpen == false && strongTagOpen == false {
 					if strongTagOpen == false {
 						result = result + "<strong>"
 						strongTagOpen = true
@@ -172,8 +177,9 @@ func mdStyle(line string) string {
 					}
 
 					strongEmTagOpen = true
+					strongEmTagOpenChar = char
 
-				} else {
+				} else if strongEmTagOpen == true && strongEmTagOpenChar == char {
 					if emTagOpen == true {
 						result = result + "</em>"
 						emTagOpen = false
@@ -185,6 +191,10 @@ func mdStyle(line string) string {
 					}
 
 					strongEmTagOpen = false
+					strongEmTagOpenChar = ""
+
+				} else {
+					result = result + char + char + char
 				}
 
 				skip = 2
@@ -194,10 +204,15 @@ func mdStyle(line string) string {
 				if strongTagOpen == false {
 					result = result + "<strong>"
 					strongTagOpen = true
+					strongTagOpenChar = char
 
-				} else {
+				} else if strongTagOpenChar == char {
 					result = result + "</strong>"
 					strongTagOpen = false
+					strongTagOpenChar = ""
+
+				} else {
+					result = result + char + char
 				}
 
 				skip = 1
@@ -207,10 +222,15 @@ func mdStyle(line string) string {
 				if emTagOpen == false {
 					result = result + "<em>"
 					emTagOpen = true
+					emTagOpenChar = char
 
-				} else {
+				} else if emTagOpenChar == char {
 					result = result + "</em>"
 					emTagOpen = false
+					emTagOpenChar = ""
+
+				} else {
+					result = result + char
 				}
 
 			} else {
