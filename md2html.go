@@ -150,6 +150,12 @@ func Convert(text string) string {
 
 			// List: <ul>
 			if isUList == true {
+				if pTagInBuffer == true {
+					result = result + "<p>" + baseMdFormat(buffer) + "</p>"
+					buffer = ""
+					pTagInBuffer = false
+				}
+
 				line = baseMdFormat(resultUList)
 				line = "<li>" + line + "</li>"
 
@@ -170,6 +176,12 @@ func Convert(text string) string {
 
 				// List: <ol>
 			} else if isOList == true {
+				if pTagInBuffer == true {
+					result = result + "<p>" + baseMdFormat(buffer) + "</p>"
+					buffer = ""
+					pTagInBuffer = false
+				}
+
 				line = baseMdFormat(resultOList)
 				line = "<li>" + line + "</li>"
 

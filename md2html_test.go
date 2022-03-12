@@ -470,7 +470,39 @@ Paragraph number 2.
 `,
 			ExpectResult: "<p>Paragraph number 1.</p><p>Paragraph number 2.</p>",
 		},
-		//Buffers
+		// Buffer
+		{
+			Input: `
+My list:
+1. item 1
+2. item 2
+`,
+			ExpectResult: "<p>My list:</p><ol><li>item 1</li><li>item 2</li></ol>",
+		},
+		{
+			Input: `
+1. item 1
+2. item 2
+The end.
+`,
+			ExpectResult: "<ol><li>item 1</li><li>item 2</li></ol><p>The end.</p>",
+		},
+		{
+			Input: `
+My list:
+- item 1
+- item 2
+`,
+			ExpectResult: "<p>My list:</p><ul><li>item 1</li><li>item 2</li></ul>",
+		},
+		{
+			Input: `
+- item 1
+- item 2
+The end.
+`,
+			ExpectResult: "<ul><li>item 1</li><li>item 2</li></ul><p>The end.</p>",
+		},
 		{
 			Input: `
 The weather is good in *Santo
