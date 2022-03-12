@@ -1,6 +1,10 @@
 # Changelog
 Semantic versioning is used (https://semver.org/).
 
+## v2.0.2
+- `<em>` and `<strong>` tags can only be closed with symbol with which it was opened
+- Fix: empty title (e.g.`##   `)
+
 ## v2.0.1
 - Fix: \`\`\` in row
 - Fix: `*`, `-`, `~` inside word
