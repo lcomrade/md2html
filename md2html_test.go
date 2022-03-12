@@ -470,6 +470,14 @@ Paragraph number 2.
 `,
 			ExpectResult: "<p>Paragraph number 1.</p><p>Paragraph number 2.</p>",
 		},
+		//Buffers
+		{
+			Input: `
+The weather is good in *Santo
+Monico*.
+`,
+			ExpectResult: "<p>The weather is good in <em>Santo Monico</em>.</p>",
+		},
 		// Embedded HTML
 		{
 			Input: `

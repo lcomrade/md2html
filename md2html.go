@@ -82,12 +82,13 @@ func Convert(text string) string {
 	lines := strings.Split(text, lineSeparator)
 
 	// Track opened HTML tags
-	var pTagOpen bool = false
+	var pTagInBuffer bool = false
 	var codeTagOpen bool = false
 	var codeTagCloseLine string = ""
 	var ulTagOpen int = 0
 	var olTagOpen int = 0
-	var isHeader bool = false
+
+	var buffer string = ""
 
 	// Reading text by line
 	for i := range lines {
@@ -116,9 +117,10 @@ func Convert(text string) string {
 				olTagOpen = olTagOpen - 1
 			}
 
-			if pTagOpen == true {
-				line = "</p>"
-				pTagOpen = false
+			if pTagInBuffer == true {
+				line = "<p>" + baseMdFormat(buffer) + "</p>"
+				buffer = ""
+				pTagInBuffer = false
 			}
 
 			// If code block: <pre><code>
@@ -129,9 +131,10 @@ func Convert(text string) string {
 				codeTagCloseLine = "```"
 			}
 
-			if pTagOpen == true {
-				line = "</p><pre><code>"
-				pTagOpen = false
+			if pTagInBuffer == true {
+				line = "<p>" + baseMdFormat(buffer) + "</p><pre><code>"
+				buffer = ""
+				pTagInBuffer = false
 
 			} else {
 				line = "<pre><code>"
@@ -147,9 +150,7 @@ func Convert(text string) string {
 
 			// List: <ul>
 			if isUList == true {
-				line = mdStyle(resultUList)
-				line = mdLink(line)
-				line = mdAutolink(line)
+				line = baseMdFormat(resultUList)
 				line = "<li>" + line + "</li>"
 
 				for olTagOpen != 0 {
@@ -169,9 +170,7 @@ func Convert(text string) string {
 
 				// List: <ol>
 			} else if isOList == true {
-				line = mdStyle(resultOList)
-				line = mdLink(line)
-				line = mdAutolink(line)
+				line = baseMdFormat(resultOList)
 				line = "<li>" + line + "</li>"
 
 				for ulTagOpen != 0 {
@@ -190,33 +189,32 @@ func Convert(text string) string {
 				}
 
 			} else {
-				// Links and images: <a> and <img>
-				line = mdLink(line)
-				line = mdAutolink(line)
-
 				// Header format: <h1> - <h6>
-				line, isHeader = mdTitle(line)
-
-				// Text format: <em>, <strong> and <code>
-				line = mdStyle(line)
+				lineIsHeader, isHeader := mdTitle(line)
 
 				// Paragraph or header?
 				if isHeader == false {
-					if pTagOpen == false {
-						line = "<p>" + line
-						pTagOpen = true
-
+					if buffer == "" {
+						buffer = line
 					} else {
-						line = " " + line
+						buffer = buffer + " " + line
 					}
+
+					line = ""
+
+					pTagInBuffer = true
 
 				} else {
-					if pTagOpen == true {
-						line = "</p>" + line
-						pTagOpen = false
+					if pTagInBuffer == true {
+						line = "<p>" + baseMdFormat(buffer) + "</p>"
+						buffer = ""
+						pTagInBuffer = false
+
+					} else {
+						line = ""
 					}
 
-					isHeader = false
+					line = line + baseMdFormat(lineIsHeader)
 				}
 			}
 		}
@@ -235,9 +233,10 @@ func Convert(text string) string {
 		olTagOpen = olTagOpen - 1
 	}
 
-	if pTagOpen == true {
-		result = result + "</p>"
-		pTagOpen = false
+	if pTagInBuffer == true {
+		result = result + "<p>" + baseMdFormat(buffer) + "</p>"
+		buffer = ""
+		pTagInBuffer = false
 	}
 
 	if codeTagOpen == true {
@@ -246,4 +245,15 @@ func Convert(text string) string {
 	}
 
 	return result
+}
+
+func baseMdFormat(line string) string {
+	// Links and images: <a> and <img>
+	line = mdLink(line)
+	line = mdAutolink(line)
+
+	// Text format: <em>, <strong> and <code>
+	line = mdStyle(line)
+
+	return line
 }
