@@ -16,7 +16,7 @@ Download from GitHub:
 go get github.com/lcomrade/md2html
 ```
 
-Or you can use a mirror
+Or you can use a mirror:
 ```
 go get git.lcomrade.su/root/md2html
 ```
