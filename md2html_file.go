@@ -42,7 +42,7 @@ func readFile(path string) (string, error) {
 	return string(fileByte), nil
 }
 
-// Reads a file from the disk and converts it using 'Convert' function.
+// ConvertFile reads a file from the disk and converts it using 'Convert' function.
 func ConvertFile(path string) (string, error) {
 	// Read content
 	text, err := readFile(path)

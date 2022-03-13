@@ -33,6 +33,9 @@ const lineSeparator = "\n"
 //   #### This is a H4 header
 //   ##### This is a H5 header
 //   ###### This is a H6 header
+//   ## Closed H2 title #
+//   ## Closed H2 title ##
+//   ## Closed H2 title ######
 //
 // Text style ('*' may be replaced by '_'):
 //   *Italic text*
@@ -75,6 +78,24 @@ const lineSeparator = "\n"
 //       2. level 2
 //   ^^^^
 //   (4 spaces)
+//
+// Character shielding:
+//   | Input | Output |
+//   |-------|--------|
+//   | \*    | *      |
+//   | \_    | _      |
+//   | \~    | ~      |
+//   | \#    | #      |
+//   | \+    | +      |
+//   | \-    | -      |
+//   | \.    | .      |
+//
+// Paragraphs:
+// A blank line is used to separate paragraphs.
+//
+// Embedded HTML:
+// If the HTML is not in a code block, it will not be escaped.
+// That mean, you can use HTML tags inside a Markdown document.
 func Convert(text string) string {
 	var result string = ""
 
