@@ -63,6 +63,14 @@ const lineSeparator = "\n"
 //   go help build
 //   ```
 //
+//   ````markdown
+//   ```
+//   go doc
+//   go tool dist list
+//   go help build
+//   ```
+//   ````
+//
 // Unordered list ('-' may be replaced by '+' or '*'):
 //   - level 1
 //   - level 1
@@ -146,11 +154,7 @@ func Convert(text string) string {
 
 			// If code block: <pre><code>
 		} else if strings.HasPrefix(line, "```") {
-			if strings.HasPrefix(line, "````") {
-				codeTagCloseLine = "````"
-			} else {
-				codeTagCloseLine = "```"
-			}
+			codeTagCloseLine, _ = mdCodeBlock(line)
 
 			if pTagInBuffer == true {
 				line = "<p>" + baseMdFormat(buffer) + "</p><pre><code>"

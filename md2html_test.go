@@ -355,6 +355,37 @@ func TestConvert(t *testing.T) {
 			Input:        "``",
 			ExpectResult: "<p>``</p>",
 		},
+		// Code
+		{
+			Input:        "`my code`",
+			ExpectResult: "<p><code>my code</code></p>",
+		},
+		{
+			Input: "```python\n" +
+				"go doc\n" +
+				"go tool dist list\n" +
+				"go help build\n" +
+				"```\n",
+			ExpectResult: `<pre><code>go doc
+go tool dist list
+go help build
+</code></pre>`,
+		},
+		{
+			Input: "````markdown\n" +
+				"```\n" +
+				"go doc\n" +
+				"go tool dist list\n" +
+				"go help build\n" +
+				"```\n" +
+				"````\n",
+			ExpectResult: "<pre><code>```\n" +
+				"go doc\n" +
+				"go tool dist list\n" +
+				"go help build\n" +
+				"```\n" +
+				"</code></pre>",
+		},
 		// Unordered list
 		{
 			Input: `

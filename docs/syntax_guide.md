@@ -57,7 +57,7 @@ go help build
 
 `````markdown
 ````markdown
-```golang
+```bash
 go doc
 go tool dist list
 go help build
