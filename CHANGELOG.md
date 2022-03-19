@@ -1,6 +1,14 @@
 # Changelog
 Semantic versioning is used (https://semver.org/).
 
+## v2.1.0
+- Add code block highlight (used [lcomrade/highlight](https://github.com/lcomrade/highlight))
+- Code block can be opened with any number of chars
+- Now style is applied to paragraph as a single line
+- Fix: text before list
+- Update Go doc
+- Remove Go 1.9 support
+
 ## v2.0.2
 - `<em>` and `<strong>` tags can only be closed with symbol with which it was opened
 - Fix: empty title (e.g.`##   `)
