@@ -7,9 +7,9 @@
 
 ## Install
 Supported Go versions:
-- 1.9
 - 1.11
 - 1.17
+- 1.18
 
 Download from GitHub:
 ```
