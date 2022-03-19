@@ -20,7 +20,7 @@ package md2html_test
 
 import (
 	"fmt"
-	"github.com/lcomrade/md2html"
+	"github.com/lcomrade/md2html/v2"
 )
 
 func ExampleConvert() {

@@ -1,4 +1,4 @@
-module github.com/lcomrade/md2html
+module github.com/lcomrade/md2html/v2
 
 go 1.11
 

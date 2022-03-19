@@ -11,14 +11,9 @@ Supported Go versions:
 - 1.17
 - 1.18
 
-Download from GitHub:
-```
-go get github.com/lcomrade/md2html
-```
-
-Or you can use a mirror:
-```
-go get git.lcomrade.su/root/md2html
+Add to `go.mod` file:
+```go.mod
+require github.com/lcomrade/md2html/v2 v2.1.1
 ```
 
 ## Example
@@ -26,7 +21,7 @@ go get git.lcomrade.su/root/md2html
 package main
 
 import(
-	"github.com/lcomrade/md2html"
+	"github.com/lcomrade/md2html/v2"
 )
 
 const myMarkdown = `
