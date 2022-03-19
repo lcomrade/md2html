@@ -1,6 +1,9 @@
 # Changelog
 Semantic versioning is used (https://semver.org/).
 
+## v2.1.2
+Update `lcomrade/highlight` v1.0.0 => v1.0.1
+
 ## v2.1.1
 This release is only needed to get the Golang modules working.
 
