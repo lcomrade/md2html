@@ -19,6 +19,7 @@
 package md2html
 
 import (
+	"github.com/lcomrade/highlight"
 	"testing"
 )
 
@@ -361,12 +362,13 @@ func TestConvert(t *testing.T) {
 			ExpectResult: "<p><code>my code</code></p>",
 		},
 		{
-			Input: "```python\n" +
+			Input: "```\n" +
 				"go doc\n" +
 				"go tool dist list\n" +
 				"go help build\n" +
 				"```\n",
-			ExpectResult: `<pre><code>go doc
+			ExpectResult: `<pre><code>
+go doc
 go tool dist list
 go help build
 </code></pre>`,
@@ -379,11 +381,36 @@ go help build
 				"go help build\n" +
 				"```\n" +
 				"````\n",
-			ExpectResult: "<pre><code>```\n" +
+			ExpectResult: "<pre><code>\n" +
+				"```\n" +
 				"go doc\n" +
 				"go tool dist list\n" +
 				"go help build\n" +
 				"```\n" +
+				"</code></pre>",
+		},
+		{
+			Input: "```C" +
+				`
+#include <stdio.h>
+
+int main() {
+	printf("Hello, world!");
+
+	return 0;
+}
+` +
+				"```\n",
+			ExpectResult: "<pre><code>" +
+				`
+#include &ltstdio.h&gt
+
+<span class='` + highlight.StyleKeyword + `'>int</span> main() {
+	printf(<span class='` + highlight.StyleBrackets + `'>"Hello, world!"</span>);
+
+	<span class='` + highlight.StyleKeyword + `'>return</span> 0;
+}
+` +
 				"</code></pre>",
 		},
 		// Unordered list

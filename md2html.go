@@ -19,6 +19,7 @@
 package md2html
 
 import (
+	"github.com/lcomrade/highlight"
 	"strings"
 )
 
@@ -113,6 +114,7 @@ func Convert(text string) string {
 	// Track opened HTML tags
 	var pTagInBuffer bool = false
 	var codeTagOpen bool = false
+	var codeLang string = ""
 	var codeTagCloseLine string = ""
 	var ulTagOpen int = 0
 	var olTagOpen int = 0
@@ -123,15 +125,40 @@ func Convert(text string) string {
 	for i := range lines {
 		line := lines[i]
 
-		// Shield characters inside <pre><code>....</code></pre>
+		// Inside <pre><code>....</code></pre>
 		if codeTagOpen == true {
+			// Close code block
 			if line == codeTagCloseLine {
-				line = "</code></pre>"
+				// Highlight
+				tmp, err := highlight.ByName(buffer, codeLang)
+				if err == nil {
+					buffer = tmp
+				}
+
+				// Save
+				line = "<pre><code>\n" + buffer + "</code></pre>"
+				buffer = ""
+				codeLang = ""
 				codeTagOpen = false
 
+				// Continue read
 			} else {
-				line = shieldHTML(line) + lineSeparator
+				buffer = buffer + line + "\n"
+				line = ""
 			}
+
+			// Open code block <pre><code>
+		} else if strings.HasPrefix(line, "```") {
+			codeTagCloseLine, codeLang = mdCodeBlock(line)
+
+			if pTagInBuffer == true {
+				line = "<p>" + baseMdFormat(buffer) + "</p>"
+				pTagInBuffer = false
+			}
+
+			line = ""
+			buffer = ""
+			codeTagOpen = true
 
 			// End paragraph: </p> and </ol>
 		} else if line == "" {
@@ -151,21 +178,6 @@ func Convert(text string) string {
 				buffer = ""
 				pTagInBuffer = false
 			}
-
-			// If code block: <pre><code>
-		} else if strings.HasPrefix(line, "```") {
-			codeTagCloseLine, _ = mdCodeBlock(line)
-
-			if pTagInBuffer == true {
-				line = "<p>" + baseMdFormat(buffer) + "</p><pre><code>"
-				buffer = ""
-				pTagInBuffer = false
-
-			} else {
-				line = "<pre><code>"
-			}
-
-			codeTagOpen = true
 
 			// Other text
 		} else {
