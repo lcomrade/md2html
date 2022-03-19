@@ -29,6 +29,10 @@ jobs:
         with:
           go-version: ${{ matrix.go }}
 
+      - name: Get Dependencies
+        if: matrix.go == 1.9
+        run: go get github.com/lcomrade/highlight
+
       - name: Run Unit Tests
         shell: bash
         run: go test -v ./md2html*
