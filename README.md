@@ -13,7 +13,7 @@ Supported Go versions:
 
 Add to `go.mod` file:
 ```go.mod
-require github.com/lcomrade/md2html/v2 v2.1.1
+require github.com/lcomrade/md2html/v2 v2
 ```
 
 ## Example

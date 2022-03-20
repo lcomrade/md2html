@@ -1,6 +1,10 @@
 # Changelog
 Semantic versioning is used (https://semver.org/).
 
+## v2.1.3
+- Fix: empty line at beginning of code block
+- Update dependencies
+
 ## v2.1.2
 Update `lcomrade/highlight` v1.0.0 => v1.0.1
 
