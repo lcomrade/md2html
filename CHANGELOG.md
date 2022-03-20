@@ -1,6 +1,11 @@
 # Changelog
 Semantic versioning is used (https://semver.org/).
 
+## v2.1.4
+- Fix: text before code block
+- Fix: no code block end
+- Update test
+
 ## v2.1.3
 - Fix: empty line at beginning of code block
 - Update dependencies
