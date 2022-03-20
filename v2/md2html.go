@@ -136,7 +136,7 @@ func Convert(text string) string {
 				}
 
 				// Save
-				line = "<pre><code>\n" + buffer + "</code></pre>"
+				line = "<pre><code>" + buffer + "</code></pre>"
 				buffer = ""
 				codeLang = ""
 				codeTagOpen = false

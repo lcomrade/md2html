@@ -362,13 +362,12 @@ func TestConvert(t *testing.T) {
 			ExpectResult: "<p><code>my code</code></p>",
 		},
 		{
-			Input: "```\n" +
-				"go doc\n" +
-				"go tool dist list\n" +
-				"go help build\n" +
-				"```\n",
-			ExpectResult: `<pre><code>
+			Input: "```" + `
 go doc
+go tool dist list
+go help build
+` + "```",
+			ExpectResult: `<pre><code>go doc
 go tool dist list
 go help build
 </code></pre>`,
@@ -381,8 +380,7 @@ go help build
 				"go help build\n" +
 				"```\n" +
 				"````\n",
-			ExpectResult: "<pre><code>\n" +
-				"```\n" +
+			ExpectResult: "<pre><code>```\n" +
 				"go doc\n" +
 				"go tool dist list\n" +
 				"go help build\n" +
@@ -390,8 +388,7 @@ go help build
 				"</code></pre>",
 		},
 		{
-			Input: "```C" +
-				`
+			Input: "```C" + `
 #include <stdio.h>
 
 int main() {
@@ -399,19 +396,15 @@ int main() {
 
 	return 0;
 }
-` +
-				"```\n",
-			ExpectResult: "<pre><code>" +
-				`
-#include &ltstdio.h&gt
+` + "```",
+			ExpectResult: `<pre><code>#include &ltstdio.h&gt
 
 <span class='` + highlight.StyleKeyword + `'>int</span> main() {
 	printf(<span class='` + highlight.StyleBrackets + `'>"Hello, world!"</span>);
 
 	<span class='` + highlight.StyleKeyword + `'>return</span> 0;
 }
-` +
-				"</code></pre>",
+</code></pre>`,
 		},
 		// Unordered list
 		{

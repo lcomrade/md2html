@@ -2,3 +2,5 @@ github.com/lcomrade/highlight v1.0.0 h1:4AedfhU/sRF6kooDkrsAeNVVUTbASkeHQylnj+1U
 github.com/lcomrade/highlight v1.0.0/go.mod h1:J6QdV+WeR7DF5i2AVx03BsQziTLz7lSjbxlm5TAOuzQ=
 github.com/lcomrade/highlight v1.0.1 h1:+jvierMVAYtXVQ88I8wJxdWrAujW7Z0BrhzYI45ct7Y=
 github.com/lcomrade/highlight v1.0.1/go.mod h1:J6QdV+WeR7DF5i2AVx03BsQziTLz7lSjbxlm5TAOuzQ=
+github.com/lcomrade/highlight v1.0.2 h1:pWLJSEj8f1PFOfS8iHb8KhJ1f+G2UjOzWW34mCd6NJE=
+github.com/lcomrade/highlight v1.0.2/go.mod h1:J6QdV+WeR7DF5i2AVx03BsQziTLz7lSjbxlm5TAOuzQ=
