@@ -584,8 +584,7 @@ Code: <code>my code</code>
 Мой текст:
 строка 1
 строка 2
-` + "```\n" +
-				"Конец блока кода.",
+` + "```\n" + "Конец блока кода.",
 			ExpectResult: `<p>Пример:</p><pre><code>Мой текст:
 строка 1
 строка 2
@@ -603,6 +602,22 @@ line 2
 
 line 3
 </code></pre>`,
+		},
+		{
+			Input: `
+*It seems they forgot to close the tag...
+
+Next paragraph.
+`,
+			ExpectResult: "<p><em>It seems they forgot to close the tag...</em></p><p>Next paragraph.</p>",
+		},
+		{
+			Input: `
+**It seems they forgot to close the tag...
+
+Next paragraph.
+`,
+			ExpectResult: "<p><strong>It seems they forgot to close the tag...</strong></p><p>Next paragraph.</p>",
 		},
 	}
 
