@@ -585,11 +585,24 @@ Code: <code>my code</code>
 строка 1
 строка 2
 ` + "```\n" +
-"Конец блока кода.",
+				"Конец блока кода.",
 			ExpectResult: `<p>Пример:</p><pre><code>Мой текст:
 строка 1
 строка 2
 </code></pre><p>Конец блока кода.</p>`,
+		},
+		// Wrong Markdown
+		{
+			Input: "```" + `
+line 1
+line 2
+
+line 3`,
+			ExpectResult: `<pre><code>line 1
+line 2
+
+line 3
+</code></pre>`,
 		},
 	}
 

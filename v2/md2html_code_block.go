@@ -18,6 +18,10 @@
 
 package md2html
 
+import (
+	"github.com/lcomrade/highlight"
+)
+
 // Parse the line that opens the code block.
 // Return open line (e.g ``` or `````) and language name (e.g. "" or "python").
 //
@@ -40,4 +44,14 @@ func mdCodeBlock(line string) (string, string) {
 	}
 
 	return openLine, codeLang
+}
+
+// Trying to highlight code syntax.
+func tryHighlight(code string, language string) string {
+	result, err := highlight.ByName(code, language)
+	if err != nil {
+		return code
+	}
+
+	return result
 }

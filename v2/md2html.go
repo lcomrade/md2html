@@ -19,7 +19,6 @@
 package md2html
 
 import (
-	"github.com/lcomrade/highlight"
 	"strings"
 )
 
@@ -129,14 +128,7 @@ func Convert(text string) string {
 		if codeTagOpen == true {
 			// Close code block
 			if line == codeTagCloseLine {
-				// Highlight
-				tmp, err := highlight.ByName(buffer, codeLang)
-				if err == nil {
-					buffer = tmp
-				}
-
-				// Save
-				line = "<pre><code>" + buffer + "</code></pre>"
+				line = "<pre><code>" + tryHighlight(buffer, codeLang) + "</code></pre>"
 				buffer = ""
 				codeLang = ""
 				codeTagOpen = false
@@ -290,7 +282,7 @@ func Convert(text string) string {
 	}
 
 	if codeTagOpen == true {
-		result = result + "</code></pre>"
+		result = result + "<pre><code>" + tryHighlight(buffer, codeLang) + "</code></pre>"
 		codeTagOpen = false
 	}
 
