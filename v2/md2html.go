@@ -154,9 +154,10 @@ func Convert(text string) string {
 			if pTagInBuffer == true {
 				line = "<p>" + baseMdFormat(buffer) + "</p>"
 				pTagInBuffer = false
+			} else {
+				line = ""
 			}
 
-			line = ""
 			buffer = ""
 			codeTagOpen = true
 

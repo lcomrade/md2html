@@ -388,7 +388,8 @@ go help build
 				"</code></pre>",
 		},
 		{
-			Input: "```C" + `
+			Input: "Example:\n" +
+				"```C" + `
 #include <stdio.h>
 
 int main() {
@@ -397,7 +398,7 @@ int main() {
 	return 0;
 }
 ` + "```",
-			ExpectResult: `<pre><code>#include &ltstdio.h&gt
+			ExpectResult: `<p>Example:</p><pre><code>#include &ltstdio.h&gt
 
 <span class='` + highlight.StyleKeyword + `'>int</span> main() {
 	printf(<span class='` + highlight.StyleBrackets + `'>"Hello, world!"</span>);
@@ -576,6 +577,22 @@ Code: <code>my code</code>
 		{
 			Input:        "# Заголовок на русском языке",
 			ExpectResult: "<h1 id='заголовок-на-русском-языке'>Заголовок на русском языке</h1>",
+		},
+		{
+			Input: "Пример:\n" +
+				"```" + `
+Мой текст:
+строка 1
+строка 2
+
+Конец
+` + "```",
+			ExpectResult: `<p>Пример:</p><pre><code>Мой текст:
+строка 1
+строка 2
+
+Конец
+</code></pre>`,
 		},
 	}
 
