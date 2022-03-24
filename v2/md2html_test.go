@@ -403,7 +403,7 @@ int main() {
 <span class='` + highlight.StyleKeyword + `'>int</span> main() {
 	printf(<span class='` + highlight.StyleBrackets + `'>"Hello, world!"</span>);
 
-	<span class='` + highlight.StyleKeyword + `'>return</span> 0;
+	<span class='` + highlight.StyleKeyword + `'>return</span> <span class='` + highlight.StyleValue + `'>0</span>;
 }
 </code></pre>`,
 		},
