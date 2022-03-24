@@ -33,4 +33,4 @@ jobs:
         shell: bash
         run: |-
           cd ./v2/
-          go test -v ./md2html*
+          go test -cover -v ./md2html*
