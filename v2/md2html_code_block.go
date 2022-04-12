@@ -50,7 +50,7 @@ func mdCodeBlock(line string) (string, string) {
 func tryHighlight(code string, language string) string {
 	result, err := highlight.ByName(code, language)
 	if err != nil {
-		return code
+		return shieldHTML(code)
 	}
 
 	return result
