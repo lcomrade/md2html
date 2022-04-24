@@ -164,7 +164,7 @@ func mdStyle(line string) string {
 				skip = 2
 
 				// ^***WORD.... or ....WORD***^
-			} else if lastChar != char && nextChar == char && nextNextChar == char && nextNextNextChar != char {
+			} else if lastChar != char && lastChar != `\` && nextChar == char && nextNextChar == char && nextNextNextChar != char && nextNextNextChar != `\` {
 				if strongEmTagOpen == false && emTagOpen == false && strongTagOpen == false {
 					if strongTagOpen == false {
 						result = result + "<strong>"
@@ -200,7 +200,7 @@ func mdStyle(line string) string {
 				skip = 2
 
 				// ^**WORD.... or ....WORD**^
-			} else if lastChar != char && nextChar == char && nextNextChar != char {
+			} else if lastChar != char && lastChar != `\` && nextChar == char && nextNextChar != char && nextNextChar != `\` {
 				if strongTagOpen == false {
 					result = result + "<strong>"
 					strongTagOpen = true
@@ -261,7 +261,7 @@ func mdStyle(line string) string {
 				skip = 1
 
 				// ^~~WORD.... or ....WORD~~^
-			} else if lastChar != "~" && nextChar == "~" && nextNextChar != "~" {
+			} else if lastChar != "~" && lastChar != `\` && nextChar == "~" && nextNextChar != "~" && nextNextChar != `\` {
 				if delTagOpen == false {
 					result = result + "<del>"
 					delTagOpen = true

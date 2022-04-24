@@ -470,6 +470,30 @@ int main() {
 			ExpectResult: "<p>**test test**</p>",
 		},
 		{
+			Input:        `*****`,
+			ExpectResult: "<p>*****</p>",
+		},
+		{
+			Input:        `**\***`,
+			ExpectResult: "<p>*****</p>",
+		},
+		{
+			Input:        `_____`,
+			ExpectResult: "<p>_____</p>",
+		},
+		{
+			Input:        `__\___`,
+			ExpectResult: "<p>_____</p>",
+		},
+		{
+			Input:        `~~~~~`,
+			ExpectResult: "<p>~~~~~</p>",
+		},
+		{
+			Input:        `~~\~~~`,
+			ExpectResult: "<p>~~~~~</p>",
+		},
+		{
 			Input:        `\_\_test test\_\_`,
 			ExpectResult: "<p>__test test__</p>",
 		},
