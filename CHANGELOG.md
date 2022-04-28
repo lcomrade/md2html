@@ -1,6 +1,11 @@
 # Changelog
 Semantic versioning is used (https://semver.org/).
 
+## v2.1.5
+- Update `lcomrade/highlight` v1.0.2 => v1.0.4
+- Fix: `**\***`, `__\___` and `~~\~~~`
+- Fix: shielding HTML in code block whet language name is unknown
+
 ## v2.1.4
 - Fix: text before code block
 - Fix: no code block end
